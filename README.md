@@ -1,18 +1,44 @@
-﻿# 3dpg-ex-tiny-arena
+﻿# Tiny Arena
 
-Titel: Tiny Arena
+![Genre](https://img.shields.io/badge/Genre-Arena%20Shooter-red)
+![Setting](https://img.shields.io/badge/Setting-Medieval%2FFuturistic-blue)
 
-Genre: Arena Shooter
+## 📋 Overzicht
 
-Beschrijving: Je zal beginnen met een wapen in een gladiator arena. Er zullen vijandelijke monsters spawnen die je zal moeten verslaan. Maar de monsters zijn niet het enige waarvoor je moet oppassen. De arena zal de hele tijd veranderen met als doel uw spel zo moeilijk mogelijk te maken. Dus pas zeker op met want er rond u gebeurd en zorg dat je altijd in beweging blijft.
+**Tiny Arena** is een intense arena shooter waarbij je met een wapen in een gladiator arena begint. Versla vijandelijke monsters terwijl de arena constant verandert om het spel steeds moeilijker te maken. Blijf alert voor wat er om je heen gebeurt en blijf altijd in beweging!
 
-Setting: Medeival/Futuristic (dit kan veranderen met welke kant we willen opgaan in de toekomst of zelfs per level)
+## 🎮 Gameplay
 
-Gameplay voorbeeld: De speler zal met movement en abilities zich in de arena begeven en verplaatsen om de vijanden te doden en traps van de arena te ontwijken. Om de zo veel tijd zullen er nieuwe enemies spawnen en zal de arena veranderen. En als je niet op beiden oplet zal je het niet lang volhouden. 
+De speler gebruikt movement abilities om zich door de arena te verplaatsen, vijanden te verslaan en traps te ontwijken. Elke paar seconden:
+- 🔴 Spawnen nieuwe enemies
+- ⚡ Verandert de arena
+- 💀 Verhoogt de moeilijkheidsgraad
 
-Similar games: Mineplex Christmas Chaos (boss battle), Quake (movement aspect), Crab game, Skylanders (boss battle)
+**Overleef zo lang mogelijk door snel te reageren en de arena constant in de gaten te houden!**
 
-Unique selling point: Er zijn veel games die in een kleine arena een pve + changing arena aspect hebben maar dit is meestal in combinatie met een boss battle en is dus maar een klein deel van de game. Dus wat als je nu een game hebt die alleen focust op dit aspect? Je krijgt dan een game waarbij spel overzicht en snelle reacties cruciaal zijn om zo ver mogelijk te geraken. Met leuke movement mechanics en interessante traps en arena veranderingen zijn de vijanden het minste van uw problemen.
+## 🎨 Setting
+
+Medieval/Futuristic hybride setting die kan variëren per level. De exacte richting wordt bepaald tijdens de ontwikkeling.
+
+## 🎯 Unique Selling Point
+
+Veel games hebben arena-elementen met veranderende omgevingen, maar dit is meestal beperkt tot boss battles. **Tiny Arena** focust volledig op dit concept:
+
+- ✅ Pure arena survival gameplay
+- ✅ Dynamische omgeving als core mechanic
+- ✅ Snel tempo met focus op beweging en reactiesnelheid
+- ✅ Enemies zijn slechts één van de vele uitdagingen
+
+Spel overzicht en snelle reacties zijn cruciaal. Met interessante movement mechanics en gevarieerde traps worden de vijanden het minste van je problemen.
+
+## 🕹️ Vergelijkbare Games
+
+| Game | Aspect |
+|------|--------|
+| **Mineplex Christmas Chaos** | Boss battle mechanics |
+| **Quake** | Movement aspect |
+| **Crab Game** | Arena chaos |
+| **Skylanders** | Boss battle encounters |
 
 
 
