@@ -323,7 +323,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
   player: {fileID: 101265943}
-  offset: {x: 0, y: 0, z: 0}
+  offset: {x: 0, y: 1, z: 0}
   sensX: 500
   sensY: 500
 --- !u!1001 &1174789035
@@ -336,7 +336,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 409560745703296074, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.31255007
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 409560745703296074, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -344,7 +344,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 409560745703296074, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.37727547
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 409560745703296074, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -379,17 +379,49 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 6687812464177922757, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
+      propertyPath: jumpForce
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6687812464177922757, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
+      propertyPath: moveSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6687812464177922757, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
+      propertyPath: groundDrag
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6687812464177922757, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
       propertyPath: shootPoint
       value: 
-      objectReference: {fileID: 101265943}
+      objectReference: {fileID: 268933169}
+    - target: {fileID: 6687812464177922757, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
+      propertyPath: jumpCooldown
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6687812464177922757, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
       propertyPath: playerCamera
       value: 
       objectReference: {fileID: 268933168}
     - target: {fileID: 6687812464177922757, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
+      propertyPath: playerHeight
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6687812464177922757, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
+      propertyPath: airMultiplier
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6687812464177922757, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
       propertyPath: projectilePrefab
       value: 
       objectReference: {fileID: 2281332304992932546, guid: edbe8e3ee3b245248b6b36ebc02d8186, type: 3}
+    - target: {fileID: 6687812464177922757, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
+      propertyPath: whatIsGround.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 6927213579124148085, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
+      propertyPath: m_Mass
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
