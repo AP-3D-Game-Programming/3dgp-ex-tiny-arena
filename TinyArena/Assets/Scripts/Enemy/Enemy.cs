@@ -71,4 +71,19 @@ public class Enemy : MonoBehaviour
         if (player == null) return false;
         return Vector3.Distance(transform.position, player.transform.position) <= attackRange;
     }
+
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
+    }
 }
