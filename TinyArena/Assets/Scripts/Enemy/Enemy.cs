@@ -13,17 +13,42 @@ public class Enemy : MonoBehaviour
     public float fieldOfView = 85f;
     public float eyeHeight = 0.6f;
 
+    [Header("Health")]
+    public float maxHealth = 100f;
+    private float currentHealth;
+
     [Header("Attack Settings")]
     public float attackRange = 2f;
     public float attackDamage = 10f;
     public float attackCooldown = 1.5f;
     [HideInInspector] public float lastAttackTime;
+
+    [Header("Visual Feedback")]
+    public Color damageFlashColor = Color.red;
+    public float flashDuration = 0.1f;
+
+    private Renderer[] renderers;
+    private Color[] originalColors;
+
     void Start()
     {
         stateMachine = GetComponent<StateMachine>();
         agent = GetComponent<NavMeshAgent>();
         stateMachine.Initialise();
         player = GameObject.FindGameObjectWithTag("Player");
+
+        currentHealth = maxHealth;
+
+        // Store renderers and original colors for flash effect
+        renderers = GetComponentsInChildren<Renderer>();
+        originalColors = new Color[renderers.Length];
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            if (renderers[i].material.HasProperty("_Color"))
+            {
+                originalColors[i] = renderers[i].material.color;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -35,7 +60,7 @@ public class Enemy : MonoBehaviour
 
     public bool CanSeePlayer()
     {
-        if(player != null)
+        if (player != null)
         {
             if (Vector3.Distance(transform.position, player.transform.position) < sightDistance)
             {
@@ -47,7 +72,7 @@ public class Enemy : MonoBehaviour
                     RaycastHit hitInfo = new();
                     if (Physics.Raycast(ray, out hitInfo, sightDistance))
                     {
-                        if(hitInfo.transform.gameObject == player)
+                        if (hitInfo.transform.gameObject == player)
                         {
                             return true;
                         }
@@ -75,6 +100,10 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
+        Debug.Log($"Enemy took {damage} damage! Health: {currentHealth}/{maxHealth}");
+
+        // Flash red when taking damage
+        FlashDamage();
 
         if (currentHealth <= 0)
         {
@@ -82,8 +111,35 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    void FlashDamage()
+    {
+        // Change to flash color
+        foreach (Renderer renderer in renderers)
+        {
+            if (renderer.material.HasProperty("_Color"))
+            {
+                renderer.material.color = damageFlashColor;
+            }
+        }
+
+        // Reset color after flash duration
+        Invoke(nameof(ResetColor), flashDuration);
+    }
+
+    void ResetColor()
+    {
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            if (renderers[i] != null && renderers[i].material.HasProperty("_Color"))
+            {
+                renderers[i].material.color = originalColors[i];
+            }
+        }
+    }
+
     void Die()
     {
+        Debug.Log("Enemy died!");
         Destroy(gameObject);
     }
 }
