@@ -6,15 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/TestScenes/JonasT/MainMenu.unity
-    guid: 0230dc7e3ad8de941a34800a7d593195
-  - enabled: 1
-    path: Assets/Scenes/TestScenes/JonasT/GameLevel.unity
-    guid: 9575b5b936ecc134eb445dd535692632
-  - enabled: 1
-    path: Assets/Scenes/TestScenes/JonasT/GameOver.unity
-    guid: c661cbe5140e8d545a18fc88025fbbda
-  - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: 33c8e4e93eddf564aa92f13620dbe0af
   m_configObjects:
