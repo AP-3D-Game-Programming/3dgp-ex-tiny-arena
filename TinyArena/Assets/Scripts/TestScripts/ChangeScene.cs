@@ -11,7 +11,7 @@ public class ChangeScene : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        GameManager.Instance.ChangeState(GameState.Playing);
     }
 
     // Update is called once per frame
@@ -27,12 +27,12 @@ public class ChangeScene : MonoBehaviour
             if (GameManager.Instance.CurrentState == GameState.Playing)
             {
                 GameManager.Instance.ChangeState(GameState.GameOver);
-            }
+            }/*
             else
             {
                 GameManager.Instance.ChangeState(GameState.Playing);
                 timeRemaining = 5.0f;
-            }
+            }*/
         }
     }
 }

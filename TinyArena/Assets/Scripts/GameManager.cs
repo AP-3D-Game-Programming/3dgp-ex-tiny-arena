@@ -25,31 +25,41 @@ public class GameManager : MonoBehaviour
 
     public string gameplaySceneName { get; set; }
 
+    private GameObject gameOverUI;
+    private Canvas gameOverUICanvas;
+
     void Awake()
     {
         // Singleton pattern implementation
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
-        else
-        {
-            Destroy(gameObject);
-        }
+        else Destroy(gameObject);
     }
-
+    
     void Start()
     {
-        ChangeState(GameState.MainMenu);
+        ChangeState(GameState.Playing);
     }
 
     void Update()
     {
-        if (CurrentState == GameState.Paused)
-            Time.timeScale = 0.0f;
-        else
-            Time.timeScale = 1.0f;
+        if (gameOverUI is not null && gameOverUICanvas is not null) return;
+        else if (gameOverUI is null && gameOverUICanvas is null)
+        {
+            gameOverUI = GameObject.FindGameObjectWithTag("GameOver");
+            //DontDestroyOnLoad(gameOverUI);
+            return;
+        }
+        else if (gameOverUI is not null && gameOverUICanvas is null)
+        {
+            gameOverUICanvas = gameOverUI.GetComponent<Canvas>();
+            gameOverUICanvas.enabled = false;
+            //DontDestroyOnLoad(gameOverUICanvas);
+            return;
+        }
     }
 
     public void ChangeState(GameState newState)
@@ -68,6 +78,7 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.Paused:
                 // Logic for Pausing the game
+                HandlePausedGameState();
                 break;
             case GameState.GameOver:
                 // Logic for the Game Over sequence
@@ -76,14 +87,38 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void HandlePlayingGameState()
+    private async void HandlePlayingGameState()
     {
-        SceneManager.LoadScene("Scenes/TestScenes/JonasT/GameLevel");
+        if (SceneManager.GetSceneByName("GameLevelScene").isLoaded)
+        {
+            await SceneManager.UnloadSceneAsync("GameLevelScene");
+            await Resources.UnloadUnusedAssets();
+        }
+
+        await SceneManager.LoadSceneAsync("GameLevelScene", LoadSceneMode.Additive);
+
+        Time.timeScale = 1.0f;
+        Cursor.lockState = CursorLockMode.Locked;
+        
+        if (gameOverUICanvas is not null)
+            gameOverUICanvas.enabled = false;
+    }
+
+    private void HandlePausedGameState()
+    {
+        Time.timeScale = 0.0f;
     }
 
     private void HandleGameOverGameState()
     {
-        SceneManager.LoadScene("Scenes/TestScenes/JonasT/GameOver");
+        if (gameOverUICanvas is null)
+            Debug.LogError("GameOverCanvas could not be found.");
+        else
+        {
+            gameOverUICanvas.enabled = true;
+            Cursor.lockState = CursorLockMode.None;
+            Time.timeScale = 0.0f;
+        }
     }
 }
 

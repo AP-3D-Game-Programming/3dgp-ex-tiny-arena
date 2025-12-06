@@ -27,6 +27,20 @@ public class PlayerHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Determine if this is needed
+        /*if (GameManager.Instance.CurrentState == GameState.GameOver)
+        {
+            health = maxHealth;
+            UpdateHealthUI();
+            return;
+        }*/
+
+        if (health <= 0 && GameManager.Instance.CurrentState != GameState.GameOver)
+        {
+            GameManager.Instance.ChangeState(GameState.GameOver);
+            return;
+        }
+
         health = Mathf.Clamp(health, 0, maxHealth);
         UpdateHealthUI();
         if(overlay.color.a > 0)
