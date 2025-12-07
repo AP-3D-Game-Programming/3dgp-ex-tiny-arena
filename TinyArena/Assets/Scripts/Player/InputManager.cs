@@ -9,6 +9,8 @@ public class InputManager : MonoBehaviour
     private PlayerMotor motor;
     private PlayerLook look;
     private PlayerShoot shoot;
+    private SpellManager spellManager;
+
     private void Awake()
     {
         playerInput = new PlayerInput();
@@ -17,10 +19,17 @@ public class InputManager : MonoBehaviour
         motor = GetComponent<PlayerMotor>();
         look = GetComponent<PlayerLook>();
         shoot = GetComponent<PlayerShoot>();
+        spellManager = GetComponent<SpellManager>();
 
+        // Movement
         onFoot.Jump.performed += ctx => motor.Jump();
-        onFoot.Shoot.performed += ctx => shoot.Shoot();
-        onFoot.Reload.performed += ctx => shoot.Reload();
+
+        // Shooting
+        onFoot.Shoot.performed += ctx => shoot.StartFiring();
+        onFoot.Shoot.canceled += ctx => shoot.StopFiring();
+
+        // Switch spells
+        onFoot.ChangeWeapon.performed += ctx => spellManager.NextSpell();
     }
 
     private void FixedUpdate()
@@ -42,5 +51,4 @@ public class InputManager : MonoBehaviour
     {
         onFoot.Disable();
     }
-
 }
