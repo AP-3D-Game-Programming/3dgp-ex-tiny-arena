@@ -1,90 +1,94 @@
 using UnityEngine;
+using System.Collections;
 
 public class PlayerShoot : MonoBehaviour
 {
-    [Header("Shooting Settings")]
-    public float damage = 25f;
-    public float range = 100f;
-    public float fireRate = 0.5f;
-    public int maxAmmo = 30;
-    public float reloadTime = 2f;
-
-    [Header("References")]
     public Camera playerCamera;
     public ParticleSystem muzzleFlash;
-    public GameObject impactEffect;
+    public Transform staffTransform;  //  voeg deze toe in de Inspector
 
-    private float nextTimeToFire = 0f;
-    private int currentAmmo;
-    private bool isReloading = false;
+    public SpellManager spellManager;
 
-    void Start()
+    private bool isHolding = false;
+    private float nextShot = 0f;
+
+    private Quaternion originalRotation = Quaternion.Euler(-90, 0, 0);
+    private Quaternion firingRotation = Quaternion.Euler(-35, 0, 0);
+
+    private Coroutine rotateRoutine;   //  zorgt dat animaties niet overlappen
+
+
+    public void StartFiring()
     {
-        currentAmmo = maxAmmo;
+        isHolding = true;
 
-        if (playerCamera == null)
+        // start rotatie naar firing pose
+        StartRotate(firingRotation, 0.1f);
+
+        StartCoroutine(FireLoop());
+    }
+
+    public void StopFiring()
+    {
+        isHolding = false;
+
+        // rotatie terug naar originele
+        StartRotate(originalRotation, 0.15f);
+    }
+
+    IEnumerator FireLoop()
+    {
+        while (isHolding)
         {
-            playerCamera = Camera.main;
+            TryShoot();
+            yield return null;
         }
     }
 
-    public void Shoot()
+    void TryShoot()
     {
-        if (isReloading || currentAmmo <= 0 || Time.time < nextTimeToFire)
-            return;
+        Spell spell = spellManager.CurrentSpell;
+        if (spell == null) return;
+        if (Time.time < nextShot) return;
 
-        nextTimeToFire = Time.time + fireRate;
-        currentAmmo--;
-        Debug.Log($"Shot! Ammo: {currentAmmo}/{maxAmmo}");
+        nextShot = Time.time + spell.fireRate;
 
-        // Play muzzle flash
         if (muzzleFlash != null)
-        {
             muzzleFlash.Play();
-        }
 
-        // Raycast from center of screen
-        RaycastHit hit;
-        if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, range))
-        {
-            Debug.Log($"Hit: {hit.transform.name}");
-
-            // Check if we hit an enemy
-            Enemy enemy = hit.transform.GetComponent<Enemy>();
-            if (enemy != null)
-            {
-                enemy.TakeDamage(damage);
-            }
-
-            // Spawn impact effect
-            if (impactEffect != null)
-            {
-                GameObject impact = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-                Destroy(impact, 2f);
-            }
-        }
-
-        // Auto reload when out of ammo
-        if (currentAmmo <= 0)
-        {
-            Reload();
-        }
+        spell.Cast(playerCamera);
+        // spawn visueel effect aan staff
+        spell.PlayTrailFX(staffTransform, playerCamera, spell.spellColor);
     }
 
-    public void Reload()
+
+    // -------------------------------
+    // ROTATIE-SYSTEEM
+    // -------------------------------
+
+    private void StartRotate(Quaternion targetRot, float duration)
     {
-        if (!isReloading && currentAmmo < maxAmmo)
-        {
-            isReloading = true;
-            Debug.Log("Reloading...");
-            Invoke(nameof(FinishReload), reloadTime);
-        }
+        if (staffTransform == null) return;
+
+        // stop lopende animatie zodat ze elkaar niet overlappen
+        if (rotateRoutine != null)
+            StopCoroutine(rotateRoutine);
+
+        rotateRoutine = StartCoroutine(SmoothRotate(staffTransform, targetRot, duration));
     }
 
-    void FinishReload()
+    private IEnumerator SmoothRotate(Transform target, Quaternion endRot, float duration)
     {
-        currentAmmo = maxAmmo;
-        isReloading = false;
-        Debug.Log("Reload complete!");
+        Quaternion startRot = target.localRotation;
+        float t = 0f;
+
+        while (t < duration)
+        {
+            target.localRotation = Quaternion.Lerp(startRot, endRot, t / duration);
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        target.localRotation = endRot;
     }
 }
