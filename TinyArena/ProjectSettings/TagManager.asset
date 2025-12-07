@@ -8,6 +8,7 @@ TagManager:
   - Ring2
   - Ring3
   - Ring4
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX
