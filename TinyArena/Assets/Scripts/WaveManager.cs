@@ -16,9 +16,11 @@ public class WaveManager : MonoBehaviour
     [SerializeField] Material translucent;
     private Vector3 spawnPoint;
 
-    private float delayRemove = 2f;
+    [SerializeField] float delayRemove = 2f;
+    [SerializeField] float minDelayRemove = 1f;
     private float waitingTimeRemove = 0f;
-    private float delayEnemy = 10f;
+    [SerializeField] float delayEnemy = 10f;
+    [SerializeField] float minDelayEnemy = 3f;
     private float waitingTimeEnemy = 0f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -39,7 +41,7 @@ public class WaveManager : MonoBehaviour
         {
             StartCoroutine(DropRandomTile());
             waitingTimeRemove = 0;
-            if (delayRemove > 1f)
+            if (delayRemove > minDelayRemove)
                 delayRemove -= 0.2f;
         }
         else
@@ -49,7 +51,7 @@ public class WaveManager : MonoBehaviour
         {
             Instantiate(enemy, spawnPoint, Quaternion.identity);
             waitingTimeEnemy = 0;
-            if (delayEnemy > 3f)
+            if (delayEnemy > minDelayEnemy)
                 delayEnemy -= 0.5f;
         }
         else
