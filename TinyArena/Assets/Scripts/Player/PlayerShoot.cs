@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.Collections;
+using System.Diagnostics;
+using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour
 {
@@ -59,6 +60,27 @@ public class PlayerShoot : MonoBehaviour
         spell.Cast(playerCamera);
         // spawn visueel effect aan staff
         spell.PlayTrailFX(staffTransform, playerCamera, spell.spellColor);
+
+        //// Raycast from center of screen
+        //RaycastHit hit;
+        //if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, range))
+        //{
+        //    Debug.Log($"Hit: {hit.transform.name}");
+
+        //    // Check if we hit an enemy
+        //    Enemy enemy = hit.transform.GetComponent<Enemy>();
+        //    if (enemy != null)
+        //    {
+        //        enemy.TakeDamage(damage);
+        //    }
+
+        //    // Spawn impact effect
+        //    if (impactEffect != null)
+        //    {
+        //        GameObject impact = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+        //        Destroy(impact, 2f);
+        //    }
+        //}
     }
 
 
@@ -91,4 +113,6 @@ public class PlayerShoot : MonoBehaviour
 
         target.localRotation = endRot;
     }
+
+
 }

@@ -42,4 +42,14 @@ public class PlayerMotor : MonoBehaviour
             playerVelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);
         }
     }
+
+    public void Sprint()
+    {
+        speed = 10f;
+    }
+
+    public void Walk()
+    {
+        speed = 5;
+    }
 }
