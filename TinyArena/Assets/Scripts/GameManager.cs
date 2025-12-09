@@ -3,10 +3,11 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
-
-    public delegate void GameStateChanged(GameState newState);
-    public event GameStateChanged OnGameStateChanged;
+    private GameObject gameOverUI;
+    private Canvas gameOverUICanvas;
+    private GameObject player;
+    private PlayerHealth playerHealth;
+    private Scene currentScene;
 
     private GameState currentState;
 
@@ -23,18 +24,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public string gameplaySceneName { get; set; }
+    public static GameManager Instance;
 
-    private GameObject gameOverUI;
-    private Canvas gameOverUICanvas;
+    public delegate void GameStateChanged(GameState newState);
+    public event GameStateChanged OnGameStateChanged;
+
+    public string gameplaySceneName;
 
     void Awake()
     {
-        // Singleton pattern implementation
         if (Instance == null)
         {
             Instance = this;
-            //DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject);
         }
         else Destroy(gameObject);
     }
@@ -46,28 +48,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (gameOverUI is not null && gameOverUICanvas is not null) return;
-        else if (gameOverUI is null && gameOverUICanvas is null)
-        {
-            gameOverUI = GameObject.FindGameObjectWithTag("GameOver");
-            //DontDestroyOnLoad(gameOverUI);
-            return;
-        }
-        else if (gameOverUI is not null && gameOverUICanvas is null)
-        {
-            gameOverUICanvas = gameOverUI.GetComponent<Canvas>();
-            gameOverUICanvas.enabled = false;
-            //DontDestroyOnLoad(gameOverUICanvas);
-            return;
-        }
-    }
-
-    public void ChangeState(GameState newState)
-    {
-        if (CurrentState == newState) return;
-
-        CurrentState = newState;
-        switch (newState)
+        switch (currentState)
         {
             case GameState.MainMenu:
                 // Logic for entering the Main Menu
@@ -87,21 +68,26 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private async void HandlePlayingGameState()
+    private void ChangeState(GameState newState)
+    {
+        if (CurrentState == newState) return;
+        CurrentState = newState;
+    }
+
+    private void HandlePlayingGameState()
     {
         if (SceneManager.GetSceneByName("GameLevelScene").isLoaded)
         {
-            await SceneManager.UnloadSceneAsync("GameLevelScene");
-            await Resources.UnloadUnusedAssets();
+            currentScene = SceneManager.GetSceneByName("GameLevelScene");
+            Cursor.lockState = CursorLockMode.Locked;
+            player = GameObject.FindGameObjectWithTag("Player");
+            PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+            if (playerHealth != null)
+            {
+                if (playerHealth.health <= 0) ChangeState(GameState.GameOver);
+            }
         }
-
-        await SceneManager.LoadSceneAsync("GameLevelScene", LoadSceneMode.Additive);
-
-        Time.timeScale = 1.0f;
-        Cursor.lockState = CursorLockMode.Locked;
-        
-        if (gameOverUICanvas is not null)
-            gameOverUICanvas.enabled = false;
+        SceneManager.LoadScene("GameLevelScene", LoadSceneMode.Additive);
     }
 
     private void HandlePausedGameState()
