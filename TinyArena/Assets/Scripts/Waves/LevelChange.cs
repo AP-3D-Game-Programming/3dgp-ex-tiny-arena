@@ -1,13 +1,20 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class LevelChange : MonoBehaviour
 {
+    private List<GameObject> Rings = new List<GameObject>();
+    [SerializeField] Material normal;
+    [SerializeField] Material translucent;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        Rings.Add(GameObject.FindWithTag("Ring1"));
+        Rings.Add(GameObject.FindWithTag("Ring2"));
+        Rings.Add(GameObject.FindWithTag("Ring3"));
+        Rings.Add(GameObject.FindWithTag("Ring4"));
     }
 
     // Update is called once per frame
@@ -16,7 +23,7 @@ public class LevelChange : MonoBehaviour
         
     }
 
-    IEnumerator DropRandomTile()
+    public IEnumerator DropRandomTile()
     {
         int ringIndex = Mathf.FloorToInt(Random.Range(0, 4));
         int tileIndex = Mathf.FloorToInt(Random.Range(0, 16));
@@ -37,5 +44,11 @@ public class LevelChange : MonoBehaviour
         tile.GetComponent<MeshRenderer>().material = normal;
         tile.GetComponent<MeshCollider>().enabled = true;
         tile.GetComponent<MeshRenderer>().enabled = true;
+    }
+
+    // rotates a specific ring 
+    IEnumerator RotateRing(int ringindex, float RotationAmmount)
+    {
+        throw new System.NotImplementedException();
     }
 }

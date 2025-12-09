@@ -7,10 +7,11 @@ public class EnemySpawner : MonoBehaviour
     private float waitingTime = 0f;
     private List<Vector3> spawnpoints;
     [SerializeField] GameObject[] enemies;
+    public bool spawning;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        var spawns = GameObject.FindGameObjectsWithTag("spawnpoints");
+        var spawns = GameObject.FindGameObjectsWithTag("spawnpoint");
         foreach (var spawn in spawns)
         {
             spawnpoints.Add(spawn.GetComponent<Transform>().position);
