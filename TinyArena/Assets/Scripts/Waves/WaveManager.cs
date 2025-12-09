@@ -19,9 +19,8 @@ public class WaveManager : MonoBehaviour
     [SerializeField] float delayRemove = 2f;
     [SerializeField] float minDelayRemove = 1f;
     private float waitingTimeRemove = 0f;
-    [SerializeField] float delayEnemy = 10f;
-    [SerializeField] float minDelayEnemy = 3f;
-    private float waitingTimeEnemy = 0f;
+
+    private int waveCount = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -47,15 +46,7 @@ public class WaveManager : MonoBehaviour
         else
             waitingTimeRemove += Time.deltaTime;
 
-        if (waitingTimeEnemy + Time.deltaTime > delayEnemy)
-        {
-            Instantiate(enemy, spawnPoint, Quaternion.identity);
-            waitingTimeEnemy = 0;
-            if (delayEnemy > minDelayEnemy)
-                delayEnemy -= 0.5f;
-        }
-        else
-            waitingTimeEnemy += Time.deltaTime;
+        
     }
 
     // rotates a specific ring 
@@ -64,26 +55,5 @@ public class WaveManager : MonoBehaviour
         throw new System.NotImplementedException();
     }
 
-    IEnumerator DropRandomTile()
-    {
-        int ringIndex = Mathf.FloorToInt(Random.Range(0, 4));
-        int tileIndex = Mathf.FloorToInt(Random.Range(0, 16));
-        GameObject ring = Rings[ringIndex];
-        List<Transform> tiles = ring.GetComponentsInChildren<Transform>().Where(x => !x.gameObject.Equals(ring)).ToList();
-        GameObject tile = tiles[tileIndex].gameObject;
-        Debug.Log($"name: {tile.name}");
-        if (tile.Equals(ring) || tile.GetComponent<MeshRenderer>().material.Equals(translucent))
-        {
-            yield break;
-        }
-        
-        tile.GetComponent<MeshRenderer>().material = translucent;
-        yield return new WaitForSeconds(2f);
-        tile.GetComponent<MeshCollider>().enabled = false;
-        tile.GetComponent<MeshRenderer>().enabled = false;
-        yield return new WaitForSeconds(10f);
-        tile.GetComponent<MeshRenderer>().material = normal;
-        tile.GetComponent<MeshCollider>().enabled = true;
-        tile.GetComponent<MeshRenderer>().enabled = true;
-    }
+    
 }
