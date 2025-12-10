@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,9 +9,9 @@ public class GameManager : MonoBehaviour
     private GameObject player;
     private PlayerHealth playerHealth;
     private Scene currentScene;
+    private Button playAgainButton;
 
     private GameState currentState;
-
     public GameState CurrentState
     {
         get => currentState;
@@ -28,8 +29,6 @@ public class GameManager : MonoBehaviour
 
     public delegate void GameStateChanged(GameState newState);
     public event GameStateChanged OnGameStateChanged;
-
-    public string gameplaySceneName;
 
     void Awake()
     {
@@ -76,18 +75,25 @@ public class GameManager : MonoBehaviour
 
     private void HandlePlayingGameState()
     {
+        if (playAgainButton != null)
+            playAgainButton.onClick.RemoveListener(ChangeStateOnClick);
         if (SceneManager.GetSceneByName("GameLevelScene").isLoaded)
         {
             currentScene = SceneManager.GetSceneByName("GameLevelScene");
-            Cursor.lockState = CursorLockMode.Locked;
             player = GameObject.FindGameObjectWithTag("Player");
-            PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+
+            gameOverUI = GameObject.FindGameObjectWithTag("GameOver");
+            gameOverUICanvas = gameOverUI.GetComponent<Canvas>();
+
+            Time.timeScale = 1.0f;
+            Cursor.lockState = CursorLockMode.Locked;
+            gameOverUICanvas.enabled = false;
+
+            playerHealth = player.GetComponent<PlayerHealth>();
             if (playerHealth != null)
-            {
-                if (playerHealth.health <= 0) ChangeState(GameState.GameOver);
-            }
+                if (playerHealth.health <= 0 && CurrentState != GameState.GameOver) ChangeState(GameState.GameOver);
         }
-        SceneManager.LoadScene("GameLevelScene", LoadSceneMode.Additive);
+        else SceneManager.LoadScene("GameLevelScene", LoadSceneMode.Additive);
     }
 
     private void HandlePausedGameState()
@@ -97,14 +103,24 @@ public class GameManager : MonoBehaviour
 
     private void HandleGameOverGameState()
     {
-        if (gameOverUICanvas is null)
-            Debug.LogError("GameOverCanvas could not be found.");
-        else
+        if (gameOverUI != null && gameOverUICanvas != null)
         {
+            playAgainButton = gameOverUI.GetComponentInChildren<Button>();
+            if (playAgainButton != null)
+            {
+                playAgainButton.onClick.AddListener(ChangeStateOnClick);
+            }
             gameOverUICanvas.enabled = true;
             Cursor.lockState = CursorLockMode.None;
             Time.timeScale = 0.0f;
         }
+        else Debug.LogError("GameOverCanvas could not be found.");
+    }
+
+    private void ChangeStateOnClick()
+    {
+        ChangeState(GameState.Playing);
+        playerHealth.restoreHealth(playerHealth.maxHealth);
     }
 }
 
