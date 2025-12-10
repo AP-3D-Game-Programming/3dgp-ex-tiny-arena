@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 3
   tags:
   - GameOver
+  - Ring1
+  - Ring2
+  - Ring3
+  - Ring4
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX
@@ -18,7 +23,7 @@ TagManager:
   - 
   - whatIsGround
   - 
-  - 
+  - Weapons
   - 
   - 
   - 

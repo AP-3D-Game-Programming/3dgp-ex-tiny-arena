@@ -16,6 +16,8 @@ public class PlayerHealth : MonoBehaviour
     public float duration;
     public float fadeSpeed;
 
+    public Image gameOverText;
+
     private float durationTimer;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -29,7 +31,12 @@ public class PlayerHealth : MonoBehaviour
     {
         health = Mathf.Clamp(health, 0, maxHealth);
         UpdateHealthUI();
-        if(overlay.color.a > 0)
+        if (health == 0)
+        {
+            gameOverText.enabled = true;
+            Time.timeScale = 0;
+        }
+        if (overlay.color.a > 0)
         {
             if(health < 30 )
             {
