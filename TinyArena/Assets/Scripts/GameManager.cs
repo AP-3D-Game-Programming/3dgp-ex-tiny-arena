@@ -4,11 +4,13 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    private GameObject mainMenuUI;
     private GameObject gameOverUI;
     private Canvas gameOverUICanvas;
     private GameObject player;
     private PlayerHealth playerHealth;
     private Scene currentScene;
+    private Button startButton;
     private Button playAgainButton;
 
     private GameState currentState;
@@ -42,7 +44,7 @@ public class GameManager : MonoBehaviour
     
     void Start()
     {
-        ChangeState(GameState.Playing);
+        ChangeState(GameState.MainMenu);
     }
 
     void Update()
@@ -50,18 +52,15 @@ public class GameManager : MonoBehaviour
         switch (currentState)
         {
             case GameState.MainMenu:
-                // Logic for entering the Main Menu
+                HandleMainMenuGameState();
                 break;
             case GameState.Playing:
-                // Logic for starting Gameplay
                 HandlePlayingGameState();
                 break;
             case GameState.Paused:
-                // Logic for Pausing the game
                 HandlePausedGameState();
                 break;
             case GameState.GameOver:
-                // Logic for the Game Over sequence
                 HandleGameOverGameState();
                 break;
         }
@@ -73,10 +72,28 @@ public class GameManager : MonoBehaviour
         CurrentState = newState;
     }
 
+    private void HandleMainMenuGameState()
+    {
+        if (startButton != null)
+            startButton.onClick.RemoveListener(StartGameOnClick);
+
+        if (SceneManager.GetSceneByName("MainMenuScene").isLoaded)
+        {
+            currentScene = SceneManager.GetSceneByName("MainMenuScene");
+            mainMenuUI = GameObject.FindGameObjectWithTag("MainMenu");
+            startButton = mainMenuUI.GetComponentInChildren<Button>();
+
+            if (startButton != null)
+                startButton.onClick.AddListener(StartGameOnClick);
+        }
+        else SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Additive);
+    }
+
     private void HandlePlayingGameState()
     {
         if (playAgainButton != null)
-            playAgainButton.onClick.RemoveListener(ChangeStateOnClick);
+            playAgainButton.onClick.RemoveListener(ResetPlayingStateOnClick);
+
         if (SceneManager.GetSceneByName("GameLevelScene").isLoaded)
         {
             currentScene = SceneManager.GetSceneByName("GameLevelScene");
@@ -108,7 +125,7 @@ public class GameManager : MonoBehaviour
             playAgainButton = gameOverUI.GetComponentInChildren<Button>();
             if (playAgainButton != null)
             {
-                playAgainButton.onClick.AddListener(ChangeStateOnClick);
+                playAgainButton.onClick.AddListener(ResetPlayingStateOnClick);
             }
             gameOverUICanvas.enabled = true;
             Cursor.lockState = CursorLockMode.None;
@@ -117,7 +134,12 @@ public class GameManager : MonoBehaviour
         else Debug.LogError("GameOverCanvas could not be found.");
     }
 
-    private void ChangeStateOnClick()
+    private void StartGameOnClick()
+    {
+        ChangeState(GameState.Playing);
+    }
+
+    private void ResetPlayingStateOnClick()
     {
         ChangeState(GameState.Playing);
         playerHealth.restoreHealth(playerHealth.maxHealth);
