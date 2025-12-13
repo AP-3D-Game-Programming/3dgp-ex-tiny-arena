@@ -48,18 +48,18 @@ public class PlayerShoot : MonoBehaviour
 
     void TryShoot()
     {
-        Spell spell = spellManager.CurrentSpell;
-        if (spell == null) return;
-        if (Time.time < nextShot) return;
+        //Spell spell = spellManager.CurrentSpell;
+        //if (spell == null) return;
+        //if (Time.time < nextShot) return;
 
-        nextShot = Time.time + spell.fireRate;
+        //nextShot = Time.time + spell.fireRate;
 
-        if (muzzleFlash != null)
-            muzzleFlash.Play();
+        //if (muzzleFlash != null)
+        //    muzzleFlash.Play();
 
-        spell.Cast(playerCamera);
-        // spawn visueel effect aan staff
-        spell.PlayTrailFX(staffTransform, playerCamera, spell.spellColor);
+        //spell.Cast(playerCamera);
+        //// spawn visueel effect aan staff
+        //spell.PlayTrailFX(staffTransform, playerCamera, spell.spellColor);
 
         //// Raycast from center of screen
         //RaycastHit hit;
@@ -81,6 +81,25 @@ public class PlayerShoot : MonoBehaviour
         //        Destroy(impact, 2f);
         //    }
         //}
+
+        Spell spell = spellManager.CurrentSpell;
+        if (spell == null) return;
+        if (Time.time < nextShot) return;
+
+        nextShot = Time.time + spell.fireRate;
+
+        if (muzzleFlash != null)
+            muzzleFlash.Play();
+
+        // 1. Raycast uitvoeren (centraal in player)
+        if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out RaycastHit hit, spell.range))
+        {
+            // 2. Spell krijgt de hit en beslist wat er gebeurt
+            spell.OnHit(hit);
+        }
+
+        // 3. Trail effect laten zien
+        spell.PlayTrailFX(staffTransform, playerCamera, spell.spellColor);
     }
 
 
