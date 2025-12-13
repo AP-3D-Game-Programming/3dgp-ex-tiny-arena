@@ -74,17 +74,21 @@ public class GameManager : MonoBehaviour
 
     private void HandleMainMenuGameState()
     {
-        if (startButton != null)
-            startButton.onClick.RemoveListener(StartGameOnClick);
-
         if (SceneManager.GetSceneByName("MainMenuScene").isLoaded)
         {
             currentScene = SceneManager.GetSceneByName("MainMenuScene");
-            mainMenuUI = GameObject.FindGameObjectWithTag("MainMenu");
-            startButton = mainMenuUI.GetComponentInChildren<Button>();
+
+            if (mainMenuUI == null)
+                mainMenuUI = GameObject.FindGameObjectWithTag("MainMenu");
+
+            if (startButton == null)
+                startButton = mainMenuUI.GetComponentInChildren<Button>();
 
             if (startButton != null)
+            {
+                startButton.onClick.RemoveAllListeners();
                 startButton.onClick.AddListener(StartGameOnClick);
+            }
         }
         else SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Additive);
     }
@@ -123,10 +127,10 @@ public class GameManager : MonoBehaviour
         if (gameOverUI != null && gameOverUICanvas != null)
         {
             playAgainButton = gameOverUI.GetComponentInChildren<Button>();
+
             if (playAgainButton != null)
-            {
                 playAgainButton.onClick.AddListener(ResetPlayingStateOnClick);
-            }
+
             gameOverUICanvas.enabled = true;
             Cursor.lockState = CursorLockMode.None;
             Time.timeScale = 0.0f;
@@ -137,6 +141,7 @@ public class GameManager : MonoBehaviour
     private void StartGameOnClick()
     {
         ChangeState(GameState.Playing);
+        SceneManager.UnloadSceneAsync("MainMenuScene");
     }
 
     private void ResetPlayingStateOnClick()
