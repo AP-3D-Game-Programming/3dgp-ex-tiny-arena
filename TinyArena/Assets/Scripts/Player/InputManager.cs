@@ -23,6 +23,8 @@ public class InputManager : MonoBehaviour
 
         // Movement
         onFoot.Jump.performed += ctx => motor.Jump();
+        onFoot.Sprint.performed += ctx => motor.Sprint();
+        onFoot.Sprint.canceled += ctx => motor.Walk();
 
         // Shooting
         onFoot.Shoot.performed += ctx => shoot.StartFiring();

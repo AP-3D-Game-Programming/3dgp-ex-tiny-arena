@@ -9,8 +9,8 @@ public class SpellManager : MonoBehaviour
     public Spell CurrentSpell { get; private set; }
 
     [Header("Effects")]
-    public ParticleSystem staffGlowParticles;  // <— jouw glow FX op de staff
-    public ParticleSystem spellTrailFX; //  <- trail FX
+    public ParticleSystem staffGlowParticles;  //glow FX op de staff
+    public ParticleSystem spellTrailFX; //trail FX
 
     private int currentIndex = 0;
     public static SpellManager Instance { get; private set; }
@@ -56,7 +56,7 @@ public class SpellManager : MonoBehaviour
             return;
 
         var main = staffGlowParticles.main;
-        main.startColor = CurrentSpell.spellColor;  // <-- BELANGRIJK
+        main.startColor = CurrentSpell.spellColor;  //BELANGRIJK
 
         Debug.Log("Glow updated to: " + CurrentSpell.spellColor);
     }
