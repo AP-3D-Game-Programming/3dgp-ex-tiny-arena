@@ -1,13 +1,15 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.VFX;
 
 public class EnemySpawner : MonoBehaviour
 {
+    public bool isSpawning = false;
     private float waitingTime = 0f;
     private List<Vector3> spawnpoints;
-    [SerializeField] GameObject[] enemies;
-    public bool spawning;
+    [SerializeField] List<GameObject> enemies = new List<GameObject>();
+    private List<GameObject> allowedEnemies = new List<GameObject>();
+    private Transform parent;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -16,36 +18,42 @@ public class EnemySpawner : MonoBehaviour
         {
             spawnpoints.Add(spawn.GetComponent<Transform>().position);
         }
+        parent = GameObject.FindGameObjectWithTag("enemies").GetComponent<Transform>();
     }
 
-    public void SpawnEnemy(int interval, int amount)
+    public void SpawnEnemy(float interval, int amount, int[] allowedTypes)
     {
-        int spawns = 0;
-        while (spawns < amount)
+        if (!isSpawning)
         {
-            if (waitingTime + Time.deltaTime > interval)
+            isSpawning = true;
+            allowedEnemies.RemoveAll(e => true);
+            foreach (int type in allowedTypes)
             {
-                SpawnEnemy();
-                waitingTime = 0;
-                spawns++;
+                allowedEnemies.Add(enemies[type]);
             }
-            else
-                waitingTime += Time.deltaTime;
+            StartCoroutine(SpawnEnemy(interval, amount));
         }
+        
     }
 
-    private void SpawnEnemy()
+    private IEnumerator SpawnEnemy(float interval, int amount)
     {
-        Instantiate(getEnemy(), getSpawnPoint(), Quaternion.identity);
+        for (int i = 0; i < amount; i++)
+        {
+            Instantiate(getEnemy(), getSpawnPoint(), Quaternion.identity, parent);
+            yield return new WaitForSeconds(interval);
+        }
+        yield return new WaitUntil(() => parent.childCount == 0);
+        isSpawning = false;
     }
     private GameObject getEnemy()
     {
-        int enemytype = Random.Range(0, enemies.Length);
-        return enemies[enemytype];
+        int enemytype = Random.Range(0, allowedEnemies.Count);
+        return allowedEnemies[enemytype];
     }
     private Vector3 getSpawnPoint()
     {
-        int spawnpoint = Random.Range(0, enemies.Length);
+        int spawnpoint = Random.Range(0, spawnpoints.Count);
         return spawnpoints[spawnpoint];
     }
 }

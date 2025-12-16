@@ -11,17 +11,10 @@ public class LevelChange : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Rings.Add(GameObject.FindWithTag("Ring1"));
-        Rings.Add(GameObject.FindWithTag("Ring2"));
-        Rings.Add(GameObject.FindWithTag("Ring3"));
-        Rings.Add(GameObject.FindWithTag("Ring4"));
+        Rings = GameObject.FindGameObjectsWithTag("ring").ToList();
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public IEnumerator DropRandomTile()
     {
@@ -47,7 +40,7 @@ public class LevelChange : MonoBehaviour
     }
 
     // rotates a specific ring 
-    IEnumerator RotateRing(int ringindex, float RotationAmmount)
+    public IEnumerator RotateRandomRing()
     {
         throw new System.NotImplementedException();
     }
