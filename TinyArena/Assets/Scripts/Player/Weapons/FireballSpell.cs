@@ -14,29 +14,37 @@ public class FireballSpell : Spell
         damageFalloff = 0;
 
         spellColor = new Color(1f, 0.35f, 0f);  // oranje vuur
+
+        maxPenetrations = 999;
+        stopOnWall = true;
+        damageFalloff = 0;
     }
 
-    public override void Cast(Camera cam)
+    //public override void Cast(Camera cam)
+    //{
+    //    // 1. eerst de directe raycast: waar explodeert de fireball?
+    //    Vector3 origin = cam.transform.position;
+    //    Vector3 direction = cam.transform.forward;
+
+    //    if (Physics.Raycast(origin, direction, out RaycastHit hit, range))
+    //    {
+    //        // Hier explodeert de Fireball
+    //        Explode(hit.point);
+    //    }
+    //}
+
+    public override void OnHit(RaycastHit hit)
     {
-        // 1. eerst de directe raycast: waar explodeert de fireball?
-        Vector3 origin = cam.transform.position;
-        Vector3 direction = cam.transform.forward;
-
-        if (Physics.Raycast(origin, direction, out RaycastHit hit, range))
-        {
-            // Hier explodeert de Fireball
-            Explode(hit.point);
-        }
+        Explode(hit.point);
     }
-
 
     // -------------------------
     //   FIREBALL EXPLOSIE
     // -------------------------
     private void Explode(Vector3 explosionPoint)
     {
-        int rays = 32;                     // aantal richtingen
-        float explosionRange = 6f;         // explosie radius
+        int rays = 64;                     // aantal richtingen
+        float explosionRange = 10f;         // explosie radius
         float explosionDamage = this.damage;
 
         for (int i = 0; i < rays; i++)
@@ -55,5 +63,30 @@ public class FireballSpell : Spell
         }
 
         Debug.Log("Fireball explosie op: " + explosionPoint);
+    }
+
+    public override void PlayTrailFX(Transform staffTip, Camera cam, Color color)
+    {
+        if (SpellManager.Instance == null || SpellManager.Instance.spellTrailFX == null)
+            return;
+
+        // Spawn trail MIDDEN in de kijkrichting, niet staf-rotatie
+        ParticleSystem fx = Instantiate(
+            SpellManager.Instance.spellTrailFX,
+            staffTip.position,
+            cam.transform.rotation
+        );
+
+        var main = fx.main;
+        main.startColor = color;
+
+        var trail = fx.GetComponent<TrailRenderer>();
+        if (trail != null)
+        {
+            trail.startColor = color;
+            trail.endColor = color;
+        }
+
+        Destroy(fx.gameObject, 2f);
     }
 }
