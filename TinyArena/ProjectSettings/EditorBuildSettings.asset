@@ -7,6 +7,12 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/MainScene.unity
+    guid: 4d108ecdc925db34ba240583c6c47033
+  - enabled: 1
+    path: Assets/Scenes/MainMenuScene.unity
+    guid: 939c911db7643fd4fa96b93ecb9d1daf
+  - enabled: 1
+    path: Assets/Scenes/GameLevelScene.unity
     guid: 33c8e4e93eddf564aa92f13620dbe0af
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: bda476c10e6b1f44f92dd631df619ceb, type: 3}
