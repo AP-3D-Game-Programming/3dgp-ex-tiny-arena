@@ -366,7 +366,7 @@ PrefabInstance:
     - target: {fileID: 4341997873534347093, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
       propertyPath: frontHealthBar
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 9055528041153772383}
     - target: {fileID: 4753835903270834788, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1214,6 +1214,17 @@ PrefabInstance:
       addedObject: {fileID: 2037675672}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 255558fa87b16754797e745403f647a8, type: 3}
+--- !u!114 &9055528041153772383 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4507480003361236540, guid: 255558fa87b16754797e745403f647a8, type: 3}
+  m_PrefabInstance: {fileID: 9055528041153772382}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
