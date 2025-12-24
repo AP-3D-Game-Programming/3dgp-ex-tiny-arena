@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
     private Button startButton;
     private Button playAgainButton;
 
+    [Header("Audio")]
+    public AudioClip menuMusic;
+
     private GameState currentState;
     public GameState CurrentState
     {
@@ -74,6 +77,11 @@ public class GameManager : MonoBehaviour
 
     private void HandleMainMenuGameState()
     {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(menuMusic);
+        }
+
         if (SceneManager.GetSceneByName("MainMenuScene").isLoaded)
         {
             currentScene = SceneManager.GetSceneByName("MainMenuScene");

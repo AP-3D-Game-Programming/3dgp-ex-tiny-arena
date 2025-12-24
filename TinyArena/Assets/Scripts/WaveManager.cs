@@ -20,6 +20,10 @@ public class WaveManager : MonoBehaviour
     private float waitingTimeRemove = 0f;
     private float delayEnemy = 10f;
     private float waitingTimeEnemy = 0f;
+
+    [Header("Audio")]
+    public AudioClip dropTileSfx;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -76,6 +80,10 @@ public class WaveManager : MonoBehaviour
         }
         
         tile.GetComponent<MeshRenderer>().material = translucent;
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(dropTileSfx);
+        }
         yield return new WaitForSeconds(2f);
         tile.GetComponent<MeshCollider>().enabled = false;
         tile.GetComponent<MeshRenderer>().enabled = false;
