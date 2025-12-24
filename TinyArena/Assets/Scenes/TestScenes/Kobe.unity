@@ -390,7 +390,7 @@ PrefabInstance:
     - target: {fileID: 7964737912853447086, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
       propertyPath: shootSound
       value: 
-      objectReference: {fileID: 8300000, guid: fe561274ed157d44c887161099bde054, type: 3}
+      objectReference: {fileID: 8300000, guid: 190edca465d6d8b4dbe849928ba461b9, type: 3}
     - target: {fileID: 7964737912853447086, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
       propertyPath: castSpellSound
       value: 
