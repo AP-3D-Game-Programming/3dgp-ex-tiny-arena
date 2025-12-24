@@ -221,20 +221,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &491427453
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 491427425}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b911935f1234de4da9bec4d64b5dc87, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  sfxSource: {fileID: 491427439}
-  musicSource: {fileID: 0}
 --- !u!1 &521434747 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7408323075462687161, guid: 981cfe149f143924e8e74b9f6b822f9a, type: 3}
@@ -387,14 +373,6 @@ PrefabInstance:
       propertyPath: frontHealthBar
       value: 
       objectReference: {fileID: 1184417865}
-    - target: {fileID: 7964737912853447086, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
-      propertyPath: shootSound
-      value: 
-      objectReference: {fileID: 8300000, guid: fe561274ed157d44c887161099bde054, type: 3}
-    - target: {fileID: 7964737912853447086, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
-      propertyPath: castSpellSound
-      value: 
-      objectReference: {fileID: 8300000, guid: fe561274ed157d44c887161099bde054, type: 3}
     - target: {fileID: 8158321589703112150, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
       propertyPath: m_Name
       value: Player
@@ -446,9 +424,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8158321589703112150, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 491427439}
-    - targetCorrespondingSourceObject: {fileID: 8158321589703112150, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 491427453}
   m_SourcePrefab: {fileID: 100100000, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
 --- !u!114 &1184417865 stripped
 MonoBehaviour:
