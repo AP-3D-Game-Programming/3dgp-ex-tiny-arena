@@ -188,10 +188,10 @@ TextureImporter:
       name: game-menus_4
       rect:
         serializedVersion: 2
-        x: 271
-        y: 4759
-        width: 1212
-        height: 287
+        x: 296
+        y: 4798
+        width: 1147
+        height: 222
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

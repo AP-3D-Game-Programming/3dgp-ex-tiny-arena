@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
     private GameObject pauseMenuUI;
     private Canvas pauseMenuUICanvas;
 
+    private GameObject settingsMenuUI;
+    private Canvas settingsMenuUICanvas;
+
     private GameObject gameOverUI;
     private Canvas gameOverUICanvas;
 
@@ -21,6 +24,7 @@ public class GameManager : MonoBehaviour
 
     private Button startButton;
     private Button continueButton;
+    private Button settingsButton;
     private Button quitButton;
     private Button playAgainButton;
 
@@ -74,6 +78,9 @@ public class GameManager : MonoBehaviour
             case GameState.Paused:
                 HandlePausedGameState();
                 break;
+            case GameState.Settings:
+                HandleSettingsGameState();
+                break;
             case GameState.GameOver:
                 HandleGameOverGameState();
                 break;
@@ -117,6 +124,9 @@ public class GameManager : MonoBehaviour
         if (continueButton != null)
             continueButton.onClick.RemoveListener(ContinueGameplayOnClick);
 
+        if (settingsButton != null)
+            settingsButton.onClick.RemoveListener(LaunchSettingsOnClick);
+
         if (quitButton != null)
             quitButton.onClick.RemoveListener(QuitGameOnClick);
 
@@ -131,6 +141,9 @@ public class GameManager : MonoBehaviour
             pauseMenuUI = GameObject.FindGameObjectWithTag("PauseMenu");
             pauseMenuUICanvas = pauseMenuUI.GetComponent<Canvas>();
 
+            settingsMenuUI = GameObject.FindGameObjectWithTag("SettingsMenu");
+            settingsMenuUICanvas = settingsMenuUI.GetComponent<Canvas>();
+
             gameOverUI = GameObject.FindGameObjectWithTag("GameOver");
             gameOverUICanvas = gameOverUI.GetComponent<Canvas>();
 
@@ -138,6 +151,7 @@ public class GameManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
 
             pauseMenuUICanvas.enabled = false;
+            settingsMenuUICanvas.enabled = false;
             gameOverUICanvas.enabled = false;
 
             playerHealth = player.GetComponent<PlayerHealth>();
@@ -152,10 +166,16 @@ public class GameManager : MonoBehaviour
 
     private void HandlePausedGameState()
     {
+        if (settingsButton != null)
+            settingsButton.onClick.RemoveListener(LaunchSettingsOnClick);
+
+        settingsMenuUICanvas.enabled = false;
+
         if (pauseMenuUI != null && pauseMenuUICanvas != null)
         {
             Button[] buttons = pauseMenuUI.transform.Find("Menu").GetComponentsInChildren<Button>();
             continueButton = buttons.Where(button => button.name == "ContinueButton").FirstOrDefault();
+            settingsButton = buttons.Where(button => button.name == "SettingsButton").FirstOrDefault();
             quitButton = buttons.Where(button => button.name == "QuitButton").FirstOrDefault();
 
             if (Keyboard.current.escapeKey.wasPressedThisFrame)
@@ -163,6 +183,9 @@ public class GameManager : MonoBehaviour
 
             if (continueButton != null)
                 continueButton.onClick.AddListener(ContinueGameplayOnClick);
+
+            if (settingsButton != null)
+                settingsButton.onClick.AddListener(LaunchSettingsOnClick);
 
             if (quitButton != null)
                 quitButton.onClick.AddListener(QuitGameOnClick);
@@ -172,6 +195,21 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0.0f;
         }
         else Debug.LogError(nameof(pauseMenuUICanvas) + " could not be found.");
+    }
+
+    private void HandleSettingsGameState()
+    {
+        if (settingsMenuUI != null && settingsMenuUICanvas != null)
+        {
+            if (Keyboard.current.escapeKey.wasPressedThisFrame)
+                ChangeState(GameState.Paused);
+
+            pauseMenuUICanvas.enabled = false;
+            settingsMenuUICanvas.enabled = true;
+            Cursor.lockState = CursorLockMode.None;
+            Time.timeScale = 0.0f;
+        }
+        else Debug.LogError(nameof(settingsMenuUICanvas) + " could not be found.");
     }
 
     private void HandleGameOverGameState()
@@ -201,6 +239,11 @@ public class GameManager : MonoBehaviour
         ChangeState(GameState.Playing);
     }
 
+    private void LaunchSettingsOnClick()
+    {
+        ChangeState(GameState.Settings);
+    }
+
     private void QuitGameOnClick()
     {
         Application.Quit();
@@ -218,5 +261,6 @@ public enum GameState
     MainMenu,
     Playing,
     Paused,
+    Settings,
     GameOver
 }
