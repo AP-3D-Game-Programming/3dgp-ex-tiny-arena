@@ -5183,6 +5183,7 @@ MonoBehaviour:
   duration: 0.25
   fadeSpeed: 1.5
   gameOverText: {fileID: 0}
+  damageSound: {fileID: 8300000, guid: 69d4edf8ec827a449a25215b0bf7ad74, type: 3}
 --- !u!114 &7964737912853447086
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -25,7 +25,7 @@ public class AudioManager : MonoBehaviour
     {
         if (clip == null || sfxSource == null) return;
 
-        sfxSource.pitch = Random.Range(0.97f, 1.03f);
+        sfxSource.pitch = Random.Range(0.95f, 1.05f);
         sfxSource.PlayOneShot(clip, volume);
     }
 
