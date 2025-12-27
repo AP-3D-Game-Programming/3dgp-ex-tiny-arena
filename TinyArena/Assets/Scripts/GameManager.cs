@@ -28,6 +28,9 @@ public class GameManager : MonoBehaviour
     private Button quitButton;
     private Button playAgainButton;
 
+    private Slider sfxVolumeSlider;
+    private Slider musicVolumeSlider;
+
     [Header("Audio")]
     public AudioClip menuMusic;
 
@@ -169,6 +172,12 @@ public class GameManager : MonoBehaviour
         if (settingsButton != null)
             settingsButton.onClick.RemoveListener(LaunchSettingsOnClick);
 
+        if (sfxVolumeSlider != null)
+            sfxVolumeSlider.onValueChanged.RemoveListener(ChangeSfxVolumeOnSlide);
+
+        if (sfxVolumeSlider != null)
+            sfxVolumeSlider.onValueChanged.RemoveListener(ChangeMusicVolumeOnSlide);
+
         settingsMenuUICanvas.enabled = false;
 
         if (pauseMenuUI != null && pauseMenuUICanvas != null)
@@ -201,8 +210,18 @@ public class GameManager : MonoBehaviour
     {
         if (settingsMenuUI != null && settingsMenuUICanvas != null)
         {
+            Slider[] sliders = settingsMenuUI.transform.Find("Menu").GetComponentsInChildren<Slider>();
+            sfxVolumeSlider = sliders.Where(slider => slider.name == "SfxVolumeSlider").FirstOrDefault();
+            musicVolumeSlider = sliders.Where(slider => slider.name == "MusicVolumeSlider").FirstOrDefault();
+
             if (Keyboard.current.escapeKey.wasPressedThisFrame)
                 ChangeState(GameState.Paused);
+
+            if (sfxVolumeSlider != null)
+                sfxVolumeSlider.onValueChanged.AddListener(ChangeSfxVolumeOnSlide);
+
+            if (musicVolumeSlider != null)
+                musicVolumeSlider.onValueChanged.AddListener(ChangeMusicVolumeOnSlide);
 
             pauseMenuUICanvas.enabled = false;
             settingsMenuUICanvas.enabled = true;
@@ -242,6 +261,16 @@ public class GameManager : MonoBehaviour
     private void LaunchSettingsOnClick()
     {
         ChangeState(GameState.Settings);
+    }
+
+    private void ChangeSfxVolumeOnSlide(float value)
+    {
+        AudioManager.Instance.sfxSource.volume = value;
+    }
+
+    private void ChangeMusicVolumeOnSlide(float value)
+    {
+        AudioManager.Instance.musicSource.volume = value;
     }
 
     private void QuitGameOnClick()

@@ -1184,6 +1184,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1162178516110041637, guid: ce1a7feb55229474fab5bd177d0a4b41, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1162178516110041637, guid: ce1a7feb55229474fab5bd177d0a4b41, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5763806078167298599, guid: ce1a7feb55229474fab5bd177d0a4b41, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5763806078167298599, guid: ce1a7feb55229474fab5bd177d0a4b41, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5763806078167298599, guid: ce1a7feb55229474fab5bd177d0a4b41, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5993079109008576820, guid: ce1a7feb55229474fab5bd177d0a4b41, type: 3}
       propertyPath: m_Name
       value: SettingsMenuUI
