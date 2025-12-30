@@ -1,10 +1,13 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
-public class InputManager : MonoBehaviour
+public class GameTestManager : MonoBehaviour
 {
-    private PlayerInput playerInput;
-    private PlayerInput.OnFootActions onFoot;
+    private GameObject gameOverUI;
+    private Canvas gameOverUICanvas;
+    private Scene currentScene;
+    private GameObject player;
+    private PlayerHealth playerHealth;
 
     private PlayerMotor motor;
     private PlayerLook look;
@@ -13,8 +16,34 @@ public class InputManager : MonoBehaviour
 
     private void Awake()
     {
-        playerInput = new PlayerInput();
-        onFoot = playerInput.OnFoot;
+        get => currentState;
+        private set
+        {
+            if (currentState != value)
+            {
+                currentState = value;
+                OnGameStateChanged?.Invoke(currentState);
+            }
+        }
+    }
+    public static GameManager Instance;
+    public delegate void GameStateChanged(GameState newState);
+    public event GameStateChanged OnGameStateChanged;
+    public string gameplaySceneName { get; set; }
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else Destroy(gameObject);
+    }
+
+    void Start()
+    {
+        ChangeState(GameState.Playing);
 
         motor = GetComponent<PlayerMotor>();
         look = GetComponent<PlayerLook>();
@@ -34,23 +63,42 @@ public class InputManager : MonoBehaviour
         onFoot.ChangeWeapon.performed += ctx => spellManager.NextSpell();
     }
 
-    private void FixedUpdate()
+    private void ChangeState(GameState newState)
     {
-        motor.ProcessMove(onFoot.Movement.ReadValue<Vector2>());
+        if (CurrentState == newState) return;
+        CurrentState = newState;
     }
 
-    private void LateUpdate()
+    private void HandlePlayingGameState()
     {
-        look.ProcessLook(onFoot.Look.ReadValue<Vector2>());
+        if (SceneManager.GetSceneByName("GameLevelScene").isLoaded)
+        {
+            currentScene = SceneManager.GetSceneByName("GameLevelScene");
+            Cursor.lockState = CursorLockMode.Locked;
+            player = GameObject.FindGameObjectWithTag("Player");
+            PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+            if (playerHealth != null)
+            {
+                if (player.health <= 0 )
+            }
+        }
+        SceneManager.LoadScene("GameLevelScene", LoadSceneMode.Additive);
     }
 
-    private void OnEnable()
+    private void HandlePausedGameState()
     {
-        onFoot.Enable();
+        Time.timeScale = 0.0f;
     }
 
-    private void OnDisable()
+    private void HandleGameOverGameState()
     {
-        onFoot.Disable();
+        if (gameOverUICanvas is null)
+            Debug.LogError("GameOverCanvas could not be found.");
+        else
+        {
+            gameOverUICanvas.enabled = true;
+            Cursor.lockState = CursorLockMode.None;
+            Time.timeScale = 0.0f;
+        }
     }
 }
