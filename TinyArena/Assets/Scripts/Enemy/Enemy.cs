@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -27,6 +28,10 @@ public class Enemy : MonoBehaviour
     public Color damageFlashColor = Color.red;
     public float flashDuration = 0.1f;
 
+    [Header("Audio")]
+    public AudioClip enemySound;
+    public float audioDelay;
+
     private Renderer[] renderers;
     private Color[] originalColors;
 
@@ -49,6 +54,8 @@ public class Enemy : MonoBehaviour
                 originalColors[i] = renderers[i].material.color;
             }
         }
+
+        StartCoroutine(EnemyAudioLoop());
     }
 
     // Update is called once per frame
@@ -142,4 +149,19 @@ public class Enemy : MonoBehaviour
         Debug.Log("Enemy died!");
         Destroy(gameObject);
     }
+
+    IEnumerator EnemyAudioLoop()
+    {
+        while (true)
+        {
+            float delay = Random.Range(2f, 10f);
+            yield return new WaitForSeconds(delay);
+
+            if (AudioManager.Instance != null && enemySound != null)
+            {
+                AudioManager.Instance.PlayEnemy(enemySound);
+            }
+        }
+    }
+
 }

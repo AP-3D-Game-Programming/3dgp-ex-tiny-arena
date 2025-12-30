@@ -5333,7 +5333,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -5385,8 +5385,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b911935f1234de4da9bec4d64b5dc87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  sfxSource: {fileID: 8727119304547662157}
-  musicSource: {fileID: 0}
+  musicSource: {fileID: 8727119304547662157}
+  playerSource: {fileID: 8727119304547662157}
+  enemySource: {fileID: 0}
+  tileSource: {fileID: 0}
 --- !u!1 &8918676677986987917
 GameObject:
   m_ObjectHideFlags: 0

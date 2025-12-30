@@ -70,7 +70,10 @@ public class PlayerShoot : MonoBehaviour
         // 3. Trail effect laten zien
         spell.PlayTrailFX(staffTransform, playerCamera, spell.spellColor);
 
-        AudioManager.Instance.PlaySFX(shootSound);
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySpell(shootSound);
+        }
     }
 
 

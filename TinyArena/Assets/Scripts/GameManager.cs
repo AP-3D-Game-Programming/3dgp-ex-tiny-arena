@@ -79,7 +79,8 @@ public class GameManager : MonoBehaviour
     {
         if (AudioManager.Instance != null)
         {
-            AudioManager.Instance.PlaySFX(menuMusic);
+            //menuMusic = 
+            AudioManager.Instance.PlayMusic(menuMusic);
         }
 
         if (SceneManager.GetSceneByName("MainMenuScene").isLoaded)
