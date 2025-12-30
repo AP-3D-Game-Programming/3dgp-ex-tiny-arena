@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelControllerTemp : MonoBehaviour
 {
@@ -17,12 +18,23 @@ public class LevelControllerTemp : MonoBehaviour
     {
         if (waitingTime + Time.deltaTime > spawnDelay)
         {
-            Instantiate(enemy, new Vector3(-10, 1, 20), Quaternion.identity);
+            InstantiateInAdditiveScene("GameLevelScene");
             waitingTime = 0;
             if (spawnDelay > 2f)
                 spawnDelay -= 0.5f;
         } 
         else 
             waitingTime += Time.deltaTime;
+    }
+
+    private void InstantiateInAdditiveScene(string sceneName)
+    {
+        Scene sceneToLoad = SceneManager.GetSceneByName(sceneName);
+        GameObject instantiatedEnemy = Instantiate(enemy, new Vector3(-10, 1, 20), Quaternion.identity);
+
+        if (sceneToLoad.IsValid())
+        {
+            SceneManager.MoveGameObjectToScene(instantiatedEnemy, sceneToLoad);
+        }
     }
 }

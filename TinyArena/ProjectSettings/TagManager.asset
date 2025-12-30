@@ -3,7 +3,17 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - GameOver
+  - Ring1
+  - Ring2
+  - Ring3
+  - Ring4
+  - SpawnPoint
+  - MainMenu
+  - Enemy
+  - PauseMenu
+  - SettingsMenu
   layers:
   - Default
   - TransparentFX
@@ -17,7 +27,7 @@ TagManager:
   - 
   - whatIsGround
   - 
-  - 
+  - Weapons
   - 
   - 
   - 

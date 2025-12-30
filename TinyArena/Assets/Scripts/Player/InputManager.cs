@@ -9,8 +9,12 @@ public class GameTestManager : MonoBehaviour
     private GameObject player;
     private PlayerHealth playerHealth;
 
-    private GameState currentState;
-    public GameState CurrentState
+    private PlayerMotor motor;
+    private PlayerLook look;
+    private PlayerShoot shoot;
+    private SpellManager spellManager;
+
+    private void Awake()
     {
         get => currentState;
         private set
@@ -41,28 +45,22 @@ public class GameTestManager : MonoBehaviour
     {
         ChangeState(GameState.Playing);
 
-    }
+        motor = GetComponent<PlayerMotor>();
+        look = GetComponent<PlayerLook>();
+        shoot = GetComponent<PlayerShoot>();
+        spellManager = GetComponent<SpellManager>();
 
-    void Update()
-    {
-        switch (currentState)
-        {
-            case GameState.MainMenu:
-                // Logic for entering the Main Menu
-                break;
-            case GameState.Playing:
-                // Logic for starting Gameplay
-                HandlePlayingGameState();
-                break;
-            case GameState.Paused:
-                // Logic for Pausing the game
-                HandlePausedGameState();
-                break;
-            case GameState.GameOver:
-                // Logic for the Game Over sequence
-                HandleGameOverGameState();
-                break;
-        }
+        // Movement
+        onFoot.Jump.performed += ctx => motor.Jump();
+        onFoot.Sprint.performed += ctx => motor.Sprint();
+        onFoot.Sprint.canceled += ctx => motor.Walk();
+
+        // Shooting
+        onFoot.Shoot.performed += ctx => shoot.StartFiring();
+        onFoot.Shoot.canceled += ctx => shoot.StopFiring();
+
+        // Switch spells
+        onFoot.ChangeWeapon.performed += ctx => spellManager.NextSpell();
     }
 
     private void ChangeState(GameState newState)
@@ -103,12 +101,4 @@ public class GameTestManager : MonoBehaviour
             Time.timeScale = 0.0f;
         }
     }
-}
-
-public enum GameState
-{
-    MainMenu,
-    Playing,
-    Paused,
-    GameOver
 }
