@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour
 {
     
-    private float health;
+    public float health;
     private float lerpTimer;
     [Header("Health Bar")]
     public float maxHealth = 100f;

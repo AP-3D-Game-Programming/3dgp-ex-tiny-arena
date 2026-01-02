@@ -14,10 +14,49 @@ public class DefaultSpell : Spell
         damageFalloff = 0f;
 
         spellColor = Color.purple;
+
+        maxPenetrations = 999;
+        stopOnWall = false;
+        damageFalloff = 0;
+
     }
 
-    public override void Cast(Camera cam)
+    public override void OnHit(RaycastHit hit)
     {
-        RaycastThroughTargets(cam, range, damage);
+        Enemy e = hit.transform.GetComponent<Enemy>();
+        if (e != null)
+        {
+            e.TakeDamage(damage);
+        }
     }
+
+    public override void PlayTrailFX(Transform staffTip, Camera cam, Color color)
+    {
+        if (SpellManager.Instance == null || SpellManager.Instance.spellTrailFX == null)
+            return;
+
+        // Spawn trail MIDDEN in de kijkrichting, niet staf-rotatie
+        ParticleSystem fx = Instantiate(
+            SpellManager.Instance.spellTrailFX,
+            staffTip.position,
+            cam.transform.rotation
+        );
+
+        var main = fx.main;
+        main.startColor = color;
+
+        var trail = fx.GetComponent<TrailRenderer>();
+        if (trail != null)
+        {
+            trail.startColor = color;
+            trail.endColor = color;
+        }
+
+        Destroy(fx.gameObject, 2f);
+    }
+
+    //public override void Cast(Camera cam)
+    //{
+    //    RaycastThroughTargets(cam, range, damage);
+    //}
 }
