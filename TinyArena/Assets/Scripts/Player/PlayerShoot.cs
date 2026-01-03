@@ -18,6 +18,8 @@ public class PlayerShoot : MonoBehaviour
 
     private Coroutine rotateRoutine;   //  zorgt dat animaties niet overlappen
 
+    [Header("Audio")]
+    public AudioClip shootSound;
 
     public void StartFiring()
     {
@@ -48,39 +50,6 @@ public class PlayerShoot : MonoBehaviour
 
     void TryShoot()
     {
-        //Spell spell = spellManager.CurrentSpell;
-        //if (spell == null) return;
-        //if (Time.time < nextShot) return;
-
-        //nextShot = Time.time + spell.fireRate;
-
-        //if (muzzleFlash != null)
-        //    muzzleFlash.Play();
-
-        //spell.Cast(playerCamera);
-        //// spawn visueel effect aan staff
-        //spell.PlayTrailFX(staffTransform, playerCamera, spell.spellColor);
-
-        //// Raycast from center of screen
-        //RaycastHit hit;
-        //if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, range))
-        //{
-        //    Debug.Log($"Hit: {hit.transform.name}");
-
-        //    // Check if we hit an enemy
-        //    Enemy enemy = hit.transform.GetComponent<Enemy>();
-        //    if (enemy != null)
-        //    {
-        //        enemy.TakeDamage(damage);
-        //    }
-
-        //    // Spawn impact effect
-        //    if (impactEffect != null)
-        //    {
-        //        GameObject impact = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-        //        Destroy(impact, 2f);
-        //    }
-        //}
 
         Spell spell = spellManager.CurrentSpell;
         if (spell == null) return;
@@ -100,6 +69,8 @@ public class PlayerShoot : MonoBehaviour
 
         // 3. Trail effect laten zien
         spell.PlayTrailFX(staffTransform, playerCamera, spell.spellColor);
+
+        AudioManager.Instance.PlaySFX(shootSound);
     }
 
 

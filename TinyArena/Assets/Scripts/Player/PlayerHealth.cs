@@ -19,6 +19,10 @@ public class PlayerHealth : MonoBehaviour
     public Image gameOverText;
 
     private float durationTimer;
+
+    [Header("Audio")]
+    public AudioClip damageSound;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -84,6 +88,12 @@ public class PlayerHealth : MonoBehaviour
         lerpTimer = 0f;
         durationTimer = 0;
         overlay.color = new Color(overlay.color.r, overlay.color.g, overlay.color.b, 1);
+
+        // Damage sound
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(damageSound);
+        }
     }
 
     public void restoreHealth(float healAmount)
