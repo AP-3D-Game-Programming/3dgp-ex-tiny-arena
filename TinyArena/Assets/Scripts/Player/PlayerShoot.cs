@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.Collections;
+using System.Diagnostics;
+using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class PlayerShoot : MonoBehaviour
 
     private Coroutine rotateRoutine;   //  zorgt dat animaties niet overlappen
 
+    [Header("Audio")]
+    public AudioClip shootSound;
 
     public void StartFiring()
     {
@@ -47,6 +50,7 @@ public class PlayerShoot : MonoBehaviour
 
     void TryShoot()
     {
+
         Spell spell = spellManager.CurrentSpell;
         if (spell == null) return;
         if (Time.time < nextShot) return;
@@ -56,9 +60,17 @@ public class PlayerShoot : MonoBehaviour
         if (muzzleFlash != null)
             muzzleFlash.Play();
 
-        spell.Cast(playerCamera);
-        // spawn visueel effect aan staff
+        // 1. Raycast uitvoeren (centraal in player)
+        if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out RaycastHit hit, spell.range))
+        {
+            // 2. Spell krijgt de hit en beslist wat er gebeurt
+            spell.OnHit(hit);
+        }
+
+        // 3. Trail effect laten zien
         spell.PlayTrailFX(staffTransform, playerCamera, spell.spellColor);
+
+        AudioManager.Instance.PlaySFX(shootSound);
     }
 
 
@@ -91,4 +103,6 @@ public class PlayerShoot : MonoBehaviour
 
         target.localRotation = endRot;
     }
+
+
 }

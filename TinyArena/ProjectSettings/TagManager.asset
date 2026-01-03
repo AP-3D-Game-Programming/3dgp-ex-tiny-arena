@@ -11,6 +11,9 @@ TagManager:
   - Ring4
   - SpawnPoint
   - MainMenu
+  - Enemy
+  - PauseMenu
+  - SettingsMenu
   layers:
   - Default
   - TransparentFX

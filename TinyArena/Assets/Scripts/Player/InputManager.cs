@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class InputManager : MonoBehaviour
 {
@@ -23,6 +23,8 @@ public class InputManager : MonoBehaviour
 
         // Movement
         onFoot.Jump.performed += ctx => motor.Jump();
+        onFoot.Sprint.performed += ctx => motor.Sprint();
+        onFoot.Sprint.canceled += ctx => motor.Walk();
 
         // Shooting
         onFoot.Shoot.performed += ctx => shoot.StartFiring();
@@ -30,25 +32,5 @@ public class InputManager : MonoBehaviour
 
         // Switch spells
         onFoot.ChangeWeapon.performed += ctx => spellManager.NextSpell();
-    }
-
-    private void FixedUpdate()
-    {
-        motor.ProcessMove(onFoot.Movement.ReadValue<Vector2>());
-    }
-
-    private void LateUpdate()
-    {
-        look.ProcessLook(onFoot.Look.ReadValue<Vector2>());
-    }
-
-    private void OnEnable()
-    {
-        onFoot.Enable();
-    }
-
-    private void OnDisable()
-    {
-        onFoot.Disable();
     }
 }
