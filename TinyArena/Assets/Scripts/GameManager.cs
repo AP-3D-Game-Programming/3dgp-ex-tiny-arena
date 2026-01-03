@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour
     private GameObject player;
     private PlayerHealth playerHealth;
 
+    private GameObject map;
+    private WaveManager waveManager;
+
     private Scene currentScene;
 
     private Button startButton;
@@ -163,6 +166,10 @@ public class GameManager : MonoBehaviour
 
             if (Keyboard.current.escapeKey.wasPressedThisFrame)
                 ChangeState(GameState.Paused);
+
+            map = GameObject.FindGameObjectWithTag("Map");
+            waveManager = map.GetComponent<WaveManager>();
+            waveManager.Begin();
         }
         else SceneManager.LoadScene("GameLevelScene", LoadSceneMode.Additive);
     }

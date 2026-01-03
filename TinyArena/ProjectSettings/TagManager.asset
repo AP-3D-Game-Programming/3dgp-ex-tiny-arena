@@ -5,15 +5,13 @@ TagManager:
   serializedVersion: 3
   tags:
   - GameOver
-  - Ring1
-  - Ring2
-  - Ring3
-  - Ring4
   - SpawnPoint
   - MainMenu
   - Enemy
   - PauseMenu
   - SettingsMenu
+  - Ring
+  - Map
   layers:
   - Default
   - TransparentFX

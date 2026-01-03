@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class WaveManager : MonoBehaviour
@@ -7,9 +8,7 @@ public class WaveManager : MonoBehaviour
     private bool started = false;
     private bool waiting = false;
     [SerializeField] float timeBetweenWaves = 5f;
-
-    [SerializeField] float delayRemove = 2f;
-    [SerializeField] float minDelayRemove = 1f;
+    [SerializeField] float enemyScaleFactor = 0.8f;
 
     private EnemySpawner enemySpawner;
     private LevelChange levelChange;
@@ -17,8 +16,6 @@ public class WaveManager : MonoBehaviour
     {
         enemySpawner = GetComponent<EnemySpawner>();
         levelChange = GetComponent<LevelChange>();
-
-        
     }
 
     public void Begin()
@@ -39,10 +36,13 @@ public class WaveManager : MonoBehaviour
                     InvokeRepeating(nameof(Drop), TileCalc(), TileCalc());
                 if (RotateCalc() != 0)
                     InvokeRepeating(nameof(Rotate), RotateCalc(), RotateCalc());
+                //if (LazerCalc())
+                    
                 waiting = true;
             }
             if (!enemySpawner.isSpawning && waiting)
             {
+                CancelInvoke();
                 StartCoroutine(Wait(timeBetweenWaves));
             }
         }
@@ -60,19 +60,36 @@ public class WaveManager : MonoBehaviour
 
     private int EnemyCalc()
     {
-        return 3;
+        switch (waveNumber)
+        {
+            case 1:
+            case 3:
+            case 4:
+            case 6:
+            case 7:
+                return 4;
+            case 2:
+            case 5:
+            case 8:
+            case 10:
+                return 6;
+            case 9:
+                return 7;
+            default:
+                return (int)Mathf.Floor(enemyScaleFactor * waveNumber);
+        }
     }
 
     private float EnemyCooldownCalc()
     {
-        return 5;
+        return waveNumber > 12 ? 2 : 7 - Mathf.Ceil(waveNumber / 3f);
     }
 
     private int[] EnemyTypeCalc()
     {
-        int[] ene = new int[1];
-        ene[0] = 0;
-        return ene;
+        var a = new int[1];
+        a[0] = 0;
+        return a;
     }
 
     private float TileCalc()
@@ -83,6 +100,8 @@ public class WaveManager : MonoBehaviour
     {
         return 0;
     }
+
+    private bool LazerCalc() { return waveNumber > 12; }
 
     private IEnumerator Wait(float time)
     {

@@ -1,28 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class LevelChange : MonoBehaviour
 {
     private List<GameObject> Rings = new List<GameObject>();
     [SerializeField] Material normal;
     [SerializeField] Material translucent;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private List<int> droppedTiles = new List<int>();
+    private GameObject Map;
     void Start()
     {
-        Rings = GameObject.FindGameObjectsWithTag("ring").ToList();
+        Rings = GameObject.FindGameObjectsWithTag("Ring").ToList();
+        
     }
-
-    // Update is called once per frame
 
     public IEnumerator DropRandomTile()
     {
-        int ringIndex = Mathf.FloorToInt(Random.Range(0, 4));
-        int tileIndex = Mathf.FloorToInt(Random.Range(0, 16));
-        GameObject ring = Rings[ringIndex];
-        List<Transform> tiles = ring.GetComponentsInChildren<Transform>().Where(x => !x.gameObject.Equals(ring)).ToList();
-        GameObject tile = tiles[tileIndex].gameObject;
+        if (droppedTiles.Count == 64) 
+            yield break;
+        int tileIndex = Random.Range(0, 64);
+        while (droppedTiles.Contains(tileIndex))
+        {
+            tileIndex = Random.Range(0, 64);
+        }
+        droppedTiles.Add(tileIndex);
+        GameObject ring = Rings[tileIndex / 16];
+        List<Transform> tileList = ring.GetComponentsInChildren<Transform>()
+                .Where(t => t.gameObject.name == $"Ring {tileIndex / 16}.{tileIndex % 16}")
+                .ToList();
+        GameObject tile = tileList.First().gameObject;
         Debug.Log($"name: {tile.name}");
         if (tile.Equals(ring) || tile.GetComponent<MeshRenderer>().material.Equals(translucent))
         {
@@ -37,11 +47,18 @@ public class LevelChange : MonoBehaviour
         tile.GetComponent<MeshRenderer>().material = normal;
         tile.GetComponent<MeshCollider>().enabled = true;
         tile.GetComponent<MeshRenderer>().enabled = true;
+        droppedTiles.Remove(tileIndex);
     }
 
     // rotates a specific ring 
     public IEnumerator RotateRandomRing()
     {
-        throw new System.NotImplementedException();
+        Rings[0].transform.Rotate(new Vector3(0, 0, 1));
+        yield break;
+    }
+
+    public void Lazer()
+    {
+
     }
 }
