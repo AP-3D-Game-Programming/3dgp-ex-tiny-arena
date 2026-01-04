@@ -4,7 +4,7 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - gameOverUIPrefab: {fileID: 8038040848116782750, guid: 921e5e72da27bb544ac56e9ec80ce484, type: 3}
+  - menuMusic: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
