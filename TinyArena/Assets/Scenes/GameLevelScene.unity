@@ -503,6 +503,8 @@ MonoBehaviour:
   isSpawning: 0
   enemies:
   - {fileID: 2872335954825143169, guid: a8efb6fc00d2c2647a05b93486bf2273, type: 3}
+  - {fileID: 2872335954825143169, guid: 566ffab5492595f4880e2d5471f84a75, type: 3}
+  - {fileID: 2872335954825143169, guid: 652de323450fcaf409953ff920753045, type: 3}
 --- !u!1001 &1174789035
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -21,7 +21,7 @@ public class EnemySpawner : MonoBehaviour
         parent = GameObject.FindGameObjectWithTag("Enemies").GetComponent<Transform>();
     }
 
-    public void SpawnEnemy(float interval, int amount, int[] allowedTypes)
+    public void SpawnEnemy(float interval, int amount, List<int> allowedTypes)
     {
         if (!isSpawning)
         {

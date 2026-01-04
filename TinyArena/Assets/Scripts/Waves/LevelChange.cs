@@ -59,6 +59,6 @@ public class LevelChange : MonoBehaviour
 
     public void Lazer()
     {
-
+        
     }
 }

@@ -1,5 +1,7 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 public class WaveManager : MonoBehaviour
@@ -88,11 +90,16 @@ public class WaveManager : MonoBehaviour
         return waveNumber > 12 ? 2 : 7 - Mathf.Ceil(waveNumber / 3f);
     }
 
-    private int[] EnemyTypeCalc()
+    private List<int> EnemyTypeCalc()
     {
-        var a = new int[1];
-        a[0] = 0;
-        return a;
+        var types = new List<int>();
+        if (waveNumber != 3 && waveNumber != 7)
+            types.Add(0);
+        if (waveNumber >= 3 && waveNumber != 7 && waveNumber != 8)
+            types.Add(1);
+        if (waveNumber >= 7)
+            types.Add(2);
+        return types;
     }
 
     private float TileCalc()
