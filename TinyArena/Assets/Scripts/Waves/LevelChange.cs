@@ -9,8 +9,12 @@ public class LevelChange : MonoBehaviour
 {
     private List<GameObject> Rings = new List<GameObject>();
     [SerializeField] Material normal;
+    [SerializeField] Material transparent1;
+    [SerializeField] Material transparent2;
     private List<int> droppedTiles = new List<int>();
     private GameObject Map;
+
+    [SerializeField] AudioClip removeTile;
     void Start()
     {
         Rings = GameObject.FindGameObjectsWithTag("Ring").ToList();
@@ -32,20 +36,23 @@ public class LevelChange : MonoBehaviour
                 .Where(t => t.gameObject.name == $"Ring {(tileIndex / 16)+ 1}.{tileIndex % 16}")
                 .ToList();
 
-
+        // remove tile
         GameObject tile = tileList.First().gameObject;
-        MeshRenderer render = tile.GetComponent<MeshRenderer>();
-        Color col = render.material.color;
-        for (float elapsed = 0f; elapsed < 2; elapsed += Time.deltaTime) {
-            col.a = 1f - elapsed / 2;
-            render.material.color = col;
-            yield return new WaitForEndOfFrame();
-        }
-        col.a = 0;
-        render.material.color = col;
+        // play sfx
+        var source = tile.AddComponent<AudioSource>();
+        source.pitch = Random.Range(0.95f, 1.05f);
+        source.PlayOneShot(removeTile, 0.3f);
+        // make transparent
+        tile.GetComponent<MeshRenderer>().material = transparent1;
+        yield return new WaitForSeconds(1f);
+        tile.GetComponent<MeshRenderer>().material = transparent2;
+        yield return new WaitForSeconds(1f);
+        // remove
         tile.GetComponent<MeshCollider>().enabled = false;
+        tile.GetComponent<MeshRenderer>().enabled = false;
         yield return new WaitForSeconds(10f);
         tile.GetComponent<MeshCollider>().enabled = true;
+        tile.GetComponent<MeshRenderer>().enabled = false;
         tile.GetComponent<MeshRenderer>().material = normal;
         droppedTiles.Remove(tileIndex);
     }

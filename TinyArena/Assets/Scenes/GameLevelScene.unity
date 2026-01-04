@@ -471,7 +471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d97df3f7c38dd02458446e61297e9fbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
-  waveNumber: 0
+  waveNumber: 4
   timeBetweenWaves: 5
   enemyScaleFactor: 0.8
   waveChange: {fileID: 8300000, guid: 843c018f99d18e042a5dc91c3be2f8f0, type: 3}
@@ -488,6 +488,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelChange
   normal: {fileID: 2100000, guid: 64c73c6fe6d961949b00b00a1567ee9a, type: 2}
+  transparent1: {fileID: 2100000, guid: d3383108660aff94280d2ca55a60915f, type: 2}
+  transparent2: {fileID: 2100000, guid: 850a34bfa18a16841b8ae66691278c9e, type: 2}
+  removeTile: {fileID: 8300000, guid: b821f02828d1eeb43be05d877b1fc7f5, type: 3}
 --- !u!114 &1160429257
 MonoBehaviour:
   m_ObjectHideFlags: 0
