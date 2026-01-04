@@ -40,12 +40,24 @@ public class AudioManager : MonoBehaviour
         playerSource.PlayOneShot(clip);
     }
 
-    public void PlayEnemy(AudioClip clip)
+    public void PlayEnemy(AudioClip clip, Vector3 position, float volume = 1f)
     {
         if (clip == null) return;
-        if (enemySource == null) return;
-        enemySource.PlayOneShot(clip);
+
+        // Maak een tijdelijk GameObject voor geluid
+        GameObject tempGO = new GameObject("EnemySFX");
+        tempGO.transform.position = position;
+
+        AudioSource aSource = tempGO.AddComponent<AudioSource>();
+        aSource.spatialBlend = 1f; // 3D geluid
+        aSource.rolloffMode = AudioRolloffMode.Linear;
+        aSource.minDistance = 1f;
+        aSource.maxDistance = 30f;
+
+        aSource.PlayOneShot(clip, volume);
+        Destroy(tempGO, clip.length); // verwijder automatisch
     }
+
 
     public void PlayTileDrop(AudioClip clip)
     {

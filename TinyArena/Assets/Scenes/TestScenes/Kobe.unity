@@ -119,37 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &205851823
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 205851824}
-  m_Layer: 12
-  m_Name: FirePoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &205851824
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 205851823}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.0115}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1606857309}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &521434747 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7408323075462687161, guid: 981cfe149f143924e8e74b9f6b822f9a, type: 3}
@@ -344,10 +313,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 8175162103963924986, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 205851824}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
 --- !u!114 &1184417865 stripped
@@ -488,11 +454,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
---- !u!4 &1606857309 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8175162103963924986, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
-  m_PrefabInstance: {fileID: 1174789035}
-  m_PrefabAsset: {fileID: 0}
 --- !u!82 &1746924162 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 7809979027880555031, guid: a8efb6fc00d2c2647a05b93486bf2273, type: 3}

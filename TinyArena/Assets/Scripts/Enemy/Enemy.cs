@@ -154,14 +154,15 @@ public class Enemy : MonoBehaviour
     {
         while (true)
         {
-            float delay = Random.Range(2f, 10f);
+            float delay = Random.Range(2f, 120f);
             yield return new WaitForSeconds(delay);
 
             if (AudioManager.Instance != null && enemySound != null)
             {
-                AudioManager.Instance.PlayEnemy(enemySound);
+                AudioManager.Instance.PlayEnemy(enemySound, transform.position);
             }
         }
     }
+
 
 }
