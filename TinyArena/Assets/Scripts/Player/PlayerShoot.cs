@@ -7,6 +7,7 @@ public class PlayerShoot : MonoBehaviour
     public Camera playerCamera;
     public ParticleSystem muzzleFlash;
     public Transform staffTransform;  //  voeg deze toe in de Inspector
+    public Transform firePoint;
 
     public SpellManager spellManager;
 
@@ -14,7 +15,7 @@ public class PlayerShoot : MonoBehaviour
     private float nextShot = 0f;
 
     private Quaternion originalRotation = Quaternion.Euler(-90, 0, 0);
-    private Quaternion firingRotation = Quaternion.Euler(-35, 0, 0);
+    private Quaternion firingRotation = Quaternion.Euler(-35, -35, 30);
 
     private Coroutine rotateRoutine;   //  zorgt dat animaties niet overlappen
 
@@ -68,7 +69,7 @@ public class PlayerShoot : MonoBehaviour
         }
 
         // 3. Trail effect laten zien
-        spell.PlayTrailFX(staffTransform, playerCamera, spell.spellColor);
+        spell.PlayTrailFX(firePoint, playerCamera, spell.spellColor);
 
         if (AudioManager.Instance != null)
         {

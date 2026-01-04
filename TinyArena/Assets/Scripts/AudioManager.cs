@@ -43,6 +43,7 @@ public class AudioManager : MonoBehaviour
     public void PlayEnemy(AudioClip clip)
     {
         if (clip == null) return;
+        if (enemySource == null) return;
         enemySource.PlayOneShot(clip);
     }
 

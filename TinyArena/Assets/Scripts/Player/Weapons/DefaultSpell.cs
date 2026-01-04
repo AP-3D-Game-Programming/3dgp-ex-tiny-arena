@@ -55,6 +55,7 @@ public class DefaultSpell : Spell
         Destroy(fx.gameObject, 2f);
     }
 
+
     //public override void Cast(Camera cam)
     //{
     //    RaycastThroughTargets(cam, range, damage);
