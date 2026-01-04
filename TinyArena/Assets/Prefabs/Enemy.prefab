@@ -161,7 +161,7 @@ MonoBehaviour:
   lastAttackTime: 0
   damageFlashColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.1
-  enemySound: {fileID: 8300000, guid: 34b359d0e7f846046bf0c04ffaaec8c4, type: 3}
+  enemySound: {fileID: 8300000, guid: 843c018f99d18e042a5dc91c3be2f8f0, type: 3}
   audioDelay: 0
 --- !u!114 &7310321742089415754
 MonoBehaviour:
