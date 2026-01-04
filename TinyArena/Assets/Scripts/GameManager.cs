@@ -31,9 +31,6 @@ public class GameManager : MonoBehaviour
     private Slider sfxVolumeSlider;
     private Slider musicVolumeSlider;
 
-    [Header("Audio")]
-    public AudioClip menuMusic;
-
     private GameState currentState;
     public GameState CurrentState
     {
@@ -98,11 +95,6 @@ public class GameManager : MonoBehaviour
 
     private void HandleMainMenuGameState()
     {
-        if (AudioManager.Instance != null)
-        {
-            AudioManager.Instance.PlaySFX(menuMusic);
-        }
-
         if (SceneManager.GetSceneByName("MainMenuScene").isLoaded)
         {
             currentScene = SceneManager.GetSceneByName("MainMenuScene");
