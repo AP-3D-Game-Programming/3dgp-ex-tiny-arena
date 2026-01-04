@@ -1,24 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemySpawner : MonoBehaviour
 {
     public bool isSpawning = false;
-    private float waitingTime = 0f;
-    private List<Vector3> spawnpoints;
+    private List<Vector3> spawnpoints = new List<Vector3>();
     [SerializeField] List<GameObject> enemies = new List<GameObject>();
     private List<GameObject> allowedEnemies = new List<GameObject>();
     private Transform parent;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        var spawns = GameObject.FindGameObjectsWithTag("spawnpoint");
+        var spawns = GameObject.FindGameObjectsWithTag("SpawnPoint");
         foreach (var spawn in spawns)
         {
             spawnpoints.Add(spawn.GetComponent<Transform>().position);
         }
-        parent = GameObject.FindGameObjectWithTag("enemies").GetComponent<Transform>();
+        parent = GameObject.FindGameObjectWithTag("Enemies").GetComponent<Transform>();
     }
 
     public void SpawnEnemy(float interval, int amount, int[] allowedTypes)

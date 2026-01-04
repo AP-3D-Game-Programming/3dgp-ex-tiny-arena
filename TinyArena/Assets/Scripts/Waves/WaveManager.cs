@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class WaveManager : MonoBehaviour
 {
-    private int waveNumber = 0;
+    public int waveNumber = 0;
     private bool started = false;
     private bool waiting = false;
     [SerializeField] float timeBetweenWaves = 5f;
     [SerializeField] float enemyScaleFactor = 0.8f;
+
+    public AudioClip waveChange;
 
     private EnemySpawner enemySpawner;
     private LevelChange levelChange;
@@ -43,6 +45,7 @@ public class WaveManager : MonoBehaviour
             if (!enemySpawner.isSpawning && waiting)
             {
                 CancelInvoke();
+                AudioManager.Instance.PlaySFX(waveChange);
                 StartCoroutine(Wait(timeBetweenWaves));
             }
         }
@@ -76,7 +79,7 @@ public class WaveManager : MonoBehaviour
             case 9:
                 return 7;
             default:
-                return (int)Mathf.Floor(enemyScaleFactor * waveNumber);
+                return Mathf.FloorToInt(enemyScaleFactor * waveNumber);
         }
     }
 
@@ -94,7 +97,12 @@ public class WaveManager : MonoBehaviour
 
     private float TileCalc()
     {
-        return 0;
+        return waveNumber switch
+        {
+            < 5 => 0f,
+            >= 5 and < 9 => 1.5f,
+            _ => 2 / (Mathf.Pow(waveNumber, 0.75f) - 4) // improvized formula
+        };
     }
     private float RotateCalc()
     {
