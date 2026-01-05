@@ -18,7 +18,7 @@ public class AttackState : BaseState
     {
         if (!enemy.IsPlayerInAttackRange() || !enemy.CanSeePlayer())
         {
-            stateMachine.ChangeState(new PatrolState());
+            stateMachine.ChangeState(new PatrolState(), EnemyState.Patrol);
             return;
         }
 
