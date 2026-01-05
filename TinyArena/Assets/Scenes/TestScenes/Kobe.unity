@@ -251,6 +251,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 241774869615294159, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
+      propertyPath: enemySource
+      value: 
+      objectReference: {fileID: 1746924162}
     - target: {fileID: 4341997873534347093, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
       propertyPath: overlay
       value: 
@@ -450,6 +454,11 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!82 &1746924162 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 7809979027880555031, guid: a8efb6fc00d2c2647a05b93486bf2273, type: 3}
+  m_PrefabInstance: {fileID: 6345715989841658522}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2037675671
 GameObject:
   m_ObjectHideFlags: 0

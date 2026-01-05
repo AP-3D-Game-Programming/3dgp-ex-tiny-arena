@@ -92,7 +92,7 @@ public class PlayerHealth : MonoBehaviour
         // Damage sound
         if (AudioManager.Instance != null)
         {
-            AudioManager.Instance.PlaySFX(damageSound);
+            AudioManager.Instance.PlayHurt(damageSound);
         }
     }
 

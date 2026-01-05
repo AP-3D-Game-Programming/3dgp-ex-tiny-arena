@@ -77,7 +77,10 @@ public class PlayerMotor : MonoBehaviour
 
         if (isMoving && !isStepping && isGrounded)
         {
-            StartCoroutine(PlayStep());
+            if (AudioManager.Instance != null)
+            {
+                StartCoroutine(PlayStep());
+            }
         }
     }
 

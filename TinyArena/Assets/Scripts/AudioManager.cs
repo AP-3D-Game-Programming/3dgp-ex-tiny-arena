@@ -4,34 +4,72 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
 
-    [Header("Sources")]
-    public AudioSource sfxSource;
     public AudioSource musicSource;
+    public AudioSource playerSource;
+    public AudioSource enemySource;
+    public AudioSource tileSource;
 
-    private void Awake()
+    void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
+            return;
         }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
-    public void PlaySFX(AudioClip clip, float volume = 1f)
+    public void PlaySpell(AudioClip clip)
     {
-        if (clip == null || sfxSource == null) return;
-
-        sfxSource.pitch = Random.Range(0.95f, 1.05f);
-        sfxSource.PlayOneShot(clip, volume);
+        if (clip == null) return;
+        playerSource.PlayOneShot(clip);
     }
 
-    // Specifiek voor footsteps (optioneel maar duidelijk)
     public void PlayFootstep(AudioClip clip)
     {
-        PlaySFX(clip, 1f);
+        if (clip == null) return;
+        playerSource.pitch = Random.Range(0.95f, 1.05f);
+        playerSource.PlayOneShot(clip);
+    }
+
+    public void PlayHurt(AudioClip clip)
+    {
+        if (clip == null) return;
+        playerSource.PlayOneShot(clip);
+    }
+
+    public void PlayEnemy(AudioClip clip, Vector3 position, float volume = 1f)
+    {
+        if (clip == null) return;
+
+        // Maak een tijdelijk GameObject voor geluid
+        GameObject tempGO = new GameObject("EnemySFX");
+        tempGO.transform.position = position;
+
+        AudioSource aSource = tempGO.AddComponent<AudioSource>();
+        aSource.spatialBlend = 1f; // 3D geluid
+        aSource.rolloffMode = AudioRolloffMode.Linear;
+        aSource.minDistance = 1f;
+        aSource.maxDistance = 30f;
+
+        aSource.PlayOneShot(clip, volume);
+        Destroy(tempGO, clip.length); // verwijder automatisch
+    }
+
+
+    public void PlayTileDrop(AudioClip clip)
+    {
+        if(clip == null) return;
+        tileSource.PlayOneShot(clip);
+    }
+
+    public void PlayMusic(AudioClip clip)
+    {
+        if (clip == null) return;
+        musicSource.clip = clip;
+        musicSource.loop = true;
+        musicSource.Play();
     }
 }
