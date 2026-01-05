@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.AI.Navigation;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class LevelChange : MonoBehaviour
 {
@@ -12,6 +10,7 @@ public class LevelChange : MonoBehaviour
     [SerializeField] Material transparent1;
     [SerializeField] Material transparent2;
     private List<int> droppedTiles = new List<int>();
+    private List<int> rotatingRings = new List<int>();
     private GameObject Map;
 
     [SerializeField] AudioClip removeTile;
@@ -52,16 +51,30 @@ public class LevelChange : MonoBehaviour
         tile.GetComponent<MeshRenderer>().enabled = false;
         yield return new WaitForSeconds(10f);
         tile.GetComponent<MeshCollider>().enabled = true;
-        tile.GetComponent<MeshRenderer>().enabled = false;
+        tile.GetComponent<MeshRenderer>().enabled = true;
         tile.GetComponent<MeshRenderer>().material = normal;
         droppedTiles.Remove(tileIndex);
     }
 
     // rotates a specific ring 
-    public IEnumerator RotateRandomRing()
+    public IEnumerator RotateRandomRing(float speed)
     {
-        Rings[0].transform.Rotate(new Vector3(0, 0, 1));
-        yield break;
+        int ringIndex = Random.Range(0, 4);
+        while (rotatingRings.Contains(ringIndex))
+        {
+            ringIndex = Random.Range(0, 4);
+        }
+        droppedTiles.Add(ringIndex);
+        float actualSpeed = speed;
+        if (Random.Range(0, 2) % 2 == 0)
+            actualSpeed *= -1;
+        for (float deg = 0; deg < 90; deg += speed * Time.deltaTime)
+        {
+            Rings[ringIndex].transform.Rotate(actualSpeed * Time.deltaTime * Vector3.up);
+            yield return new WaitForEndOfFrame();
+        }
+        droppedTiles.Remove(ringIndex);
+        yield return null;
     }
 
     public void Lazer()

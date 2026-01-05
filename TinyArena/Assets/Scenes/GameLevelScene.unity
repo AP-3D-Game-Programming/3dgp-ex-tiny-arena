@@ -471,7 +471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d97df3f7c38dd02458446e61297e9fbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
-  waveNumber: 4
+  waveNumber: 8
   timeBetweenWaves: 5
   enemyScaleFactor: 0.8
   waveChange: {fileID: 8300000, guid: 843c018f99d18e042a5dc91c3be2f8f0, type: 3}
@@ -1567,6 +1567,34 @@ PrefabInstance:
     - target: {fileID: 7396715662436134716, guid: b36db3229a0b0604f9de4c36bdc175fc, type: 3}
       propertyPath: m_Layer
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7419122496243370149, guid: b36db3229a0b0604f9de4c36bdc175fc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7419122496243370149, guid: b36db3229a0b0604f9de4c36bdc175fc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7419122496243370149, guid: b36db3229a0b0604f9de4c36bdc175fc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7419122496243370149, guid: b36db3229a0b0604f9de4c36bdc175fc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7419122496243370149, guid: b36db3229a0b0604f9de4c36bdc175fc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7419122496243370149, guid: b36db3229a0b0604f9de4c36bdc175fc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7419122496243370149, guid: b36db3229a0b0604f9de4c36bdc175fc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7488638518347361911, guid: b36db3229a0b0604f9de4c36bdc175fc, type: 3}
       propertyPath: m_Layer

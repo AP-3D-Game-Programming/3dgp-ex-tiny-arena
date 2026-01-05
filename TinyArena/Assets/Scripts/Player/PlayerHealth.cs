@@ -35,14 +35,9 @@ public class PlayerHealth : MonoBehaviour
     {
         health = Mathf.Clamp(health, 0, maxHealth);
         UpdateHealthUI();
-        if (health == 0)
-        {
-            gameOverText.enabled = true;
-            Time.timeScale = 0;
-        }
         if (overlay.color.a > 0)
         {
-            if(health < 30 )
+            if(health < 30)
             {
                 return;
             }

@@ -60,7 +60,7 @@ public class WaveManager : MonoBehaviour
 
     private void Rotate()
     {
-        StartCoroutine(levelChange.RotateRandomRing());
+        StartCoroutine(levelChange.RotateRandomRing(RotateSpeedCalc()));
     }
 
     private int EnemyCalc()
@@ -113,7 +113,12 @@ public class WaveManager : MonoBehaviour
     }
     private float RotateCalc()
     {
-        return 0;
+        return waveNumber < 9?0: waveNumber > 20?2: 12 - Mathf.Floor(waveNumber / 2);
+    }
+
+    private float RotateSpeedCalc()
+    {
+        return Mathf.Sqrt(waveNumber);
     }
 
     private bool LazerCalc() { return waveNumber > 12; }
