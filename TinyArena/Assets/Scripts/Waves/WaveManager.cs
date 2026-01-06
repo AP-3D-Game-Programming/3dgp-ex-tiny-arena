@@ -9,6 +9,7 @@ public class WaveManager : MonoBehaviour
     public int waveNumber = 0;
     private bool started = false;
     private bool waiting = false;
+    private bool completed = false;
     [SerializeField] float timeBetweenWaves = 5f;
     [SerializeField] float enemyScaleFactor = 0.8f;
     private GameObject player;
@@ -34,7 +35,7 @@ public class WaveManager : MonoBehaviour
     {
         if (started)
         {
-            if (!enemySpawner.isSpawning && !waiting)
+            if (!enemySpawner.isSpawning && !waiting && !completed)
             {
                 waveNumber++;
                 enemySpawner.SpawnEnemy(EnemyCooldownCalc(), EnemyCalc(), EnemyTypeCalc());
@@ -42,10 +43,11 @@ public class WaveManager : MonoBehaviour
                     InvokeRepeating(nameof(Drop), TileCalc(), TileCalc());
                 if (RotateCalc() != 0)
                     InvokeRepeating(nameof(Rotate), RotateCalc(), RotateCalc());            
-                waiting = true;
+                completed = true;
             }
-            if (!enemySpawner.isSpawning && waiting)
+            if (!enemySpawner.isSpawning && !waiting && completed)
             {
+                waiting = true;
                 CancelInvoke();
                 AudioManager.Instance.PlayWaveChange(waveChange);
                 StartCoroutine(Wait(timeBetweenWaves));
@@ -125,5 +127,6 @@ public class WaveManager : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         waiting = false;
+        completed = false;
     }
 }

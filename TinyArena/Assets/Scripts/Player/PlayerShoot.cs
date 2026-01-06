@@ -15,7 +15,7 @@ public class PlayerShoot : MonoBehaviour
     private float nextShot = 0f;
 
     private Quaternion originalRotation = Quaternion.Euler(-90, 0, 0);
-    private Quaternion firingRotation = Quaternion.Euler(-35, -35, 30);
+    private Quaternion firingRotation = Quaternion.Euler(-35, -45, 30);
 
     private Coroutine rotateRoutine;   //  zorgt dat animaties niet overlappen
 
