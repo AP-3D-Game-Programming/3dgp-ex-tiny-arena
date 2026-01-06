@@ -12,6 +12,12 @@ TagManager:
   - SettingsMenu
   - Ring
   - Map
+  - Ring3
+  - Ring1
+  - Ring4
+  - Ring2
+  - Enemies
+  - WaveManager
   layers:
   - Default
   - TransparentFX

@@ -38,9 +38,10 @@ public class LevelChange : MonoBehaviour
         // remove tile
         GameObject tile = tileList.First().gameObject;
         // play sfx
-        var source = tile.AddComponent<AudioSource>();
-        source.pitch = Random.Range(0.95f, 1.05f);
-        source.PlayOneShot(removeTile, 0.3f);
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayTileSound(removeTile, tile.transform.position);
+        }
         // make transparent
         tile.GetComponent<MeshRenderer>().material = transparent1;
         yield return new WaitForSeconds(1f);
