@@ -164,8 +164,8 @@ public class GameManager : MonoBehaviour
         if (settingsButton != null)
             settingsButton.onClick.RemoveListener(LaunchSettingsOnClick);
 
-        if (sfxVolumeSlider != null)
-            sfxVolumeSlider.onValueChanged.RemoveListener(ChangeSfxVolumeOnSlide);
+        //if (sfxVolumeSlider != null)
+        //    sfxVolumeSlider.onValueChanged.RemoveListener(ChangeSfxVolumeOnSlide);
 
         if (sfxVolumeSlider != null)
             sfxVolumeSlider.onValueChanged.RemoveListener(ChangeMusicVolumeOnSlide);
@@ -209,8 +209,8 @@ public class GameManager : MonoBehaviour
             if (Keyboard.current.escapeKey.wasPressedThisFrame)
                 ChangeState(GameState.Paused);
 
-            if (sfxVolumeSlider != null)
-                sfxVolumeSlider.onValueChanged.AddListener(ChangeSfxVolumeOnSlide);
+            //if (sfxVolumeSlider != null)
+            //    sfxVolumeSlider.onValueChanged.AddListener(ChangeSfxVolumeOnSlide);
 
             if (musicVolumeSlider != null)
                 musicVolumeSlider.onValueChanged.AddListener(ChangeMusicVolumeOnSlide);
@@ -255,10 +255,10 @@ public class GameManager : MonoBehaviour
         ChangeState(GameState.Settings);
     }
 
-    private void ChangeSfxVolumeOnSlide(float value)
-    {
-        AudioManager.Instance.sfxSource.volume = value;
-    }
+    //private void ChangeSfxVolumeOnSlide(float value)
+    //{
+    //    AudioManager.Instance.sfx.volume = value;
+    //}
 
     private void ChangeMusicVolumeOnSlide(float value)
     {
