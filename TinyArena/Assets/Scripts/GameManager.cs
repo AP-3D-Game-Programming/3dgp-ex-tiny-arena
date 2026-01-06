@@ -100,12 +100,13 @@ public class GameManager : MonoBehaviour
     private void HandleMainMenuGameState()
     {
         if (mainMenuButton != null)
-        {
             mainMenuButton.onClick.RemoveListener(GoToMainMenuOnClick);
 
-            if (SceneManager.GetSceneByName("GameLevelScene").isLoaded)
-                SceneManager.UnloadSceneAsync("GameLevelScene");
-        }
+        if (quitButton != null)
+            quitButton.onClick.RemoveListener(GoToMainMenuOnClick);
+
+        if (SceneManager.GetSceneByName("GameLevelScene").isLoaded)
+            SceneManager.UnloadSceneAsync("GameLevelScene");
 
         if (SceneManager.GetSceneByName("MainMenuScene").isLoaded)
         {
@@ -135,7 +136,7 @@ public class GameManager : MonoBehaviour
             settingsButton.onClick.RemoveListener(LaunchSettingsOnClick);
 
         if (quitButton != null)
-            quitButton.onClick.RemoveListener(QuitGameOnClick);
+            quitButton.onClick.RemoveListener(GoToMainMenuOnClick);
 
         if (playAgainButton != null)
             playAgainButton.onClick.RemoveListener(ResetPlayingStateOnClick);
@@ -205,7 +206,7 @@ public class GameManager : MonoBehaviour
                 settingsButton.onClick.AddListener(LaunchSettingsOnClick);
 
             if (quitButton != null)
-                quitButton.onClick.AddListener(QuitGameOnClick);
+                quitButton.onClick.AddListener(GoToMainMenuOnClick);
 
             pauseMenuUICanvas.enabled = true;
             Cursor.lockState = CursorLockMode.None;
@@ -284,11 +285,6 @@ public class GameManager : MonoBehaviour
     private void ChangeMusicVolumeOnSlide(float value)
     {
         AudioManager.Instance.musicSource.volume = value;
-    }
-
-    private void QuitGameOnClick()
-    {
-        Application.Quit();
     }
 
     private void ResetPlayingStateOnClick()
