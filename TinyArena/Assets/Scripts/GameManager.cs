@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     private Button settingsButton;
     private Button quitButton;
     private Button playAgainButton;
+    private Button mainMenuButton;
 
     private Slider sfxVolumeSlider;
     private Slider musicVolumeSlider;
@@ -98,6 +99,15 @@ public class GameManager : MonoBehaviour
 
     private void HandleMainMenuGameState()
     {
+        if (mainMenuButton != null)
+            mainMenuButton.onClick.RemoveListener(GoToMainMenuOnClick);
+
+        if (quitButton != null)
+            quitButton.onClick.RemoveListener(GoToMainMenuOnClick);
+
+        if (SceneManager.GetSceneByName("GameLevelScene").isLoaded)
+            SceneManager.UnloadSceneAsync("GameLevelScene");
+
         if (SceneManager.GetSceneByName("MainMenuScene").isLoaded)
         {
             currentScene = SceneManager.GetSceneByName("MainMenuScene");
@@ -126,7 +136,7 @@ public class GameManager : MonoBehaviour
             settingsButton.onClick.RemoveListener(LaunchSettingsOnClick);
 
         if (quitButton != null)
-            quitButton.onClick.RemoveListener(QuitGameOnClick);
+            quitButton.onClick.RemoveListener(GoToMainMenuOnClick);
 
         if (playAgainButton != null)
             playAgainButton.onClick.RemoveListener(ResetPlayingStateOnClick);
@@ -195,7 +205,7 @@ public class GameManager : MonoBehaviour
                 settingsButton.onClick.AddListener(LaunchSettingsOnClick);
 
             if (quitButton != null)
-                quitButton.onClick.AddListener(QuitGameOnClick);
+                quitButton.onClick.AddListener(GoToMainMenuOnClick);
 
             pauseMenuUICanvas.enabled = true;
             Cursor.lockState = CursorLockMode.None;
@@ -233,10 +243,15 @@ public class GameManager : MonoBehaviour
     {
         if (gameOverUI != null && gameOverUICanvas != null)
         {
-            playAgainButton = gameOverUI.GetComponentInChildren<Button>();
+            Button[] buttons = gameOverUI.GetComponentsInChildren<Button>();
+            playAgainButton = buttons.Where(button => button.name == "PlayAgainButton").FirstOrDefault();
+            mainMenuButton = buttons.Where(button => button.name == "MainMenuButton").FirstOrDefault();
 
             if (playAgainButton != null)
                 playAgainButton.onClick.AddListener(ResetPlayingStateOnClick);
+
+            if (mainMenuButton != null)
+                mainMenuButton.onClick.AddListener(GoToMainMenuOnClick);
 
             gameOverUICanvas.enabled = true;
             Cursor.lockState = CursorLockMode.None;
@@ -271,15 +286,15 @@ public class GameManager : MonoBehaviour
         AudioManager.Instance.musicSource.volume = value;
     }
 
-    private void QuitGameOnClick()
-    {
-        Application.Quit();
-    }
-
     private void ResetPlayingStateOnClick()
     {
         SceneManager.UnloadSceneAsync("GameLevelScene");
         ChangeState(GameState.Playing);
+    }
+
+    private void GoToMainMenuOnClick()
+    {
+        ChangeState(GameState.MainMenu);
     }
 }
 
