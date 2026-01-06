@@ -278,8 +278,8 @@ public class GameManager : MonoBehaviour
 
     private void ResetPlayingStateOnClick()
     {
+        SceneManager.UnloadSceneAsync("GameLevelScene");
         ChangeState(GameState.Playing);
-        playerHealth.restoreHealth(playerHealth.maxHealth);
     }
 }
 

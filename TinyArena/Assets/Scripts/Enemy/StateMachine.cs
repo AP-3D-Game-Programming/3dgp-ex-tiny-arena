@@ -6,7 +6,7 @@ public class StateMachine : MonoBehaviour
     public EnemyState activeStateType { get; private set; }
     public void Initialise()
     {
-        ChangeState(new IdleState(), EnemyState.Idle);
+        ChangeState(new PatrolState(), EnemyState.Patrol);
     }
     void Start()
     {

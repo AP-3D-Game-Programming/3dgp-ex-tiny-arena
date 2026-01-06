@@ -525,6 +525,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: map
       objectReference: {fileID: 0}
+    - target: {fileID: 3576196813287743071, guid: 9287b8f5aa3fb96418278b0df34fbd82, type: 3}
+      propertyPath: m_TagString
+      value: Map
+      objectReference: {fileID: 0}
     - target: {fileID: 7282943837984910464, guid: 9287b8f5aa3fb96418278b0df34fbd82, type: 3}
       propertyPath: m_TagString
       value: Ring
@@ -833,11 +837,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8649449777753642806, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 20
+      value: 42.06
       objectReference: {fileID: 0}
     - target: {fileID: 8649449777753642806, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8649449777753642806, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 30.01
       objectReference: {fileID: 0}
     - target: {fileID: 8918676677986987917, guid: ccc1102cd2cdefc428f609a5ba2736a3, type: 3}
       propertyPath: m_Layer
@@ -933,7 +941,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d97df3f7c38dd02458446e61297e9fbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
-  waveNumber: 0
+  waveNumber: 8
   timeBetweenWaves: 5
   enemyScaleFactor: 0.8
   waveChange: {fileID: 8300000, guid: 843c018f99d18e042a5dc91c3be2f8f0, type: 3}

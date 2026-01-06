@@ -11,6 +11,7 @@ public class WaveManager : MonoBehaviour
     private bool waiting = false;
     [SerializeField] float timeBetweenWaves = 5f;
     [SerializeField] float enemyScaleFactor = 0.8f;
+    private GameObject player;
 
     public AudioClip waveChange;
 
@@ -20,6 +21,7 @@ public class WaveManager : MonoBehaviour
     {
         enemySpawner = GetComponent<EnemySpawner>();
         levelChange = GetComponent<LevelChange>();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     public void Begin()
@@ -118,7 +120,7 @@ public class WaveManager : MonoBehaviour
 
     private float RotateSpeedCalc()
     {
-        return Mathf.Sqrt(waveNumber);
+        return 3 * Mathf.Sqrt(waveNumber);
     }
 
     private bool LazerCalc() { return waveNumber > 12; }

@@ -71,7 +71,14 @@ public class LevelChange : MonoBehaviour
             actualSpeed *= -1;
         for (float deg = 0; deg < 90; deg += speed * Time.deltaTime)
         {
-            Rings[ringIndex].transform.Rotate(actualSpeed * Time.deltaTime * Vector3.up);
+            if (Rings[ringIndex].name == "Ring 1")
+            {
+                Rings[ringIndex].transform.Rotate(actualSpeed * Time.deltaTime * Vector3.forward);
+            }
+            else
+            {
+                Rings[ringIndex].transform.Rotate(actualSpeed * Time.deltaTime * Vector3.up);
+            }
             yield return new WaitForEndOfFrame();
         }
         droppedTiles.Remove(ringIndex);
@@ -82,4 +89,6 @@ public class LevelChange : MonoBehaviour
     {
         
     }
+
+
 }
