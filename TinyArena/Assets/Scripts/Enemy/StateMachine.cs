@@ -3,13 +3,14 @@ using UnityEngine;
 public class StateMachine : MonoBehaviour
 {
     public BaseState activeState;
+    public EnemyState activeStateType { get; private set; }
     public void Initialise()
     {
-        ChangeState(new PatrolState());
+        ChangeState(new IdleState(), EnemyState.Idle);
     }
     void Start()
     {
-        
+
     }
 
     void Update()
@@ -20,13 +21,14 @@ public class StateMachine : MonoBehaviour
         }
     }
 
-    public void ChangeState(BaseState newState)
+    public void ChangeState(BaseState newState, EnemyState stateType)
     {
         if (activeState != null)
         {
             activeState.Exit();
         }
         activeState = newState;
+        activeStateType = stateType;
 
         if (activeState != null)
         {

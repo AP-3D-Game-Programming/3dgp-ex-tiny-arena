@@ -44,6 +44,8 @@ public class Enemy : MonoBehaviour
 
         currentHealth = maxHealth;
 
+        agent.speed = 1f;
+
         // Store renderers and original colors for flash effect
         renderers = GetComponentsInChildren<Renderer>();
         originalColors = new Color[renderers.Length];
