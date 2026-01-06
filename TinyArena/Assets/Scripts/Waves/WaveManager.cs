@@ -11,6 +11,7 @@ public class WaveManager : MonoBehaviour
     private bool waiting = false;
     [SerializeField] float timeBetweenWaves = 5f;
     [SerializeField] float enemyScaleFactor = 0.8f;
+    private GameObject player;
 
     public AudioClip waveChange;
 
@@ -20,6 +21,7 @@ public class WaveManager : MonoBehaviour
     {
         enemySpawner = GetComponent<EnemySpawner>();
         levelChange = GetComponent<LevelChange>();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     public void Begin()
@@ -39,15 +41,13 @@ public class WaveManager : MonoBehaviour
                 if (TileCalc() != 0)
                     InvokeRepeating(nameof(Drop), TileCalc(), TileCalc());
                 if (RotateCalc() != 0)
-                    InvokeRepeating(nameof(Rotate), RotateCalc(), RotateCalc());
-                //if (LazerCalc())
-                    
+                    InvokeRepeating(nameof(Rotate), RotateCalc(), RotateCalc());            
                 waiting = true;
             }
             if (!enemySpawner.isSpawning && waiting)
             {
                 CancelInvoke();
-                //AudioManager.Instance.PlaySFX(waveChange);
+                AudioManager.Instance.PlayWaveChange(waveChange);
                 StartCoroutine(Wait(timeBetweenWaves));
             }
         }
@@ -118,15 +118,12 @@ public class WaveManager : MonoBehaviour
 
     private float RotateSpeedCalc()
     {
-        return Mathf.Sqrt(waveNumber);
+        return 3 * Mathf.Sqrt(waveNumber);
     }
-
-    private bool LazerCalc() { return waveNumber > 12; }
 
     private IEnumerator Wait(float time)
     {
         yield return new WaitForSeconds(time);
         waiting = false;
     }
-
 }

@@ -169,8 +169,7 @@ public class GameManager : MonoBehaviour
             if (Keyboard.current.escapeKey.wasPressedThisFrame)
                 ChangeState(GameState.Paused);
 
-            map = GameObject.FindGameObjectWithTag("Map");
-            waveManager = map.GetComponent<WaveManager>();
+            waveManager = GameObject.FindGameObjectWithTag("WaveManager").GetComponent<WaveManager>();
             waveManager.Begin();
         }
         else SceneManager.LoadScene("GameLevelScene", LoadSceneMode.Additive);
@@ -289,8 +288,8 @@ public class GameManager : MonoBehaviour
 
     private void ResetPlayingStateOnClick()
     {
+        SceneManager.UnloadSceneAsync("GameLevelScene");
         ChangeState(GameState.Playing);
-        playerHealth.restoreHealth(playerHealth.maxHealth);
     }
 
     private void GoToMainMenuOnClick()

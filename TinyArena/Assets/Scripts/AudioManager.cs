@@ -8,6 +8,7 @@ public class AudioManager : MonoBehaviour
     public AudioSource playerSource;
     public AudioSource enemySource;
     public AudioSource tileSource;
+    public AudioSource waveChangeSource;
 
     void Awake()
     {
@@ -16,9 +17,7 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         Instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     public void PlaySpell(AudioClip clip)
@@ -65,11 +64,35 @@ public class AudioManager : MonoBehaviour
         tileSource.PlayOneShot(clip);
     }
 
+    public void PlayWaveChange(AudioClip clip)
+    {
+        if (clip == null) return;
+        waveChangeSource.PlayOneShot(clip);
+    }
+
     public void PlayMusic(AudioClip clip)
     {
         if (clip == null) return;
         musicSource.clip = clip;
         musicSource.loop = true;
         musicSource.Play();
+    }
+
+    public void PlayTileSound(AudioClip clip, Vector3 position, float volume = 1f)
+    {
+        if (clip == null) return;
+
+        // Maak een tijdelijk GameObject voor geluid
+        GameObject tempGO = new GameObject("TileSFX");
+        tempGO.transform.position = position;
+
+        AudioSource aSource = tempGO.AddComponent<AudioSource>();
+        aSource.spatialBlend = 1f; // 3D geluid
+        aSource.rolloffMode = AudioRolloffMode.Linear;
+        aSource.minDistance = 1f;
+        aSource.maxDistance = 18f;
+
+        aSource.PlayOneShot(clip, volume);
+        Destroy(tempGO, clip.length); // verwijder automatisch
     }
 }

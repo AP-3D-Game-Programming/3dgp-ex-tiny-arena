@@ -32,15 +32,16 @@ public class LevelChange : MonoBehaviour
         }
         droppedTiles.Add(tileIndex);
         List<Transform> tileList = Map.GetComponentsInChildren<Transform>()
-                .Where(t => t.gameObject.name == $"Ring {(tileIndex / 16)+ 1}.{tileIndex % 16}")
+                .Where(t => t.gameObject.name == $"Ring {(tileIndex / 16)+ 1}.{tileIndex % 16 + 1}")
                 .ToList();
 
         // remove tile
         GameObject tile = tileList.First().gameObject;
         // play sfx
-        var source = tile.AddComponent<AudioSource>();
-        source.pitch = Random.Range(0.95f, 1.05f);
-        source.PlayOneShot(removeTile, 0.3f);
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayTileSound(removeTile, tile.transform.position);
+        }
         // make transparent
         tile.GetComponent<MeshRenderer>().material = transparent1;
         yield return new WaitForSeconds(1f);
@@ -70,15 +71,19 @@ public class LevelChange : MonoBehaviour
             actualSpeed *= -1;
         for (float deg = 0; deg < 90; deg += speed * Time.deltaTime)
         {
-            Rings[ringIndex].transform.Rotate(actualSpeed * Time.deltaTime * Vector3.up);
+            if (Rings[ringIndex].name == "Ring 1")
+            {
+                Rings[ringIndex].transform.Rotate(actualSpeed * Time.deltaTime * Vector3.forward);
+            }
+            else
+            {
+                Rings[ringIndex].transform.Rotate(actualSpeed * Time.deltaTime * Vector3.up);
+            }
             yield return new WaitForEndOfFrame();
         }
         droppedTiles.Remove(ringIndex);
         yield return null;
     }
 
-    public void Lazer()
-    {
-        
-    }
+
 }
