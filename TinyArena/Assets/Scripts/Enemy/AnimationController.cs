@@ -30,6 +30,7 @@ public class AnimationController : MonoBehaviour
         animator.SetBool("IsIdle", false);
         animator.SetBool("IsPatrolling", false);
         animator.SetBool("IsAttacking", false);
+        animator.SetBool("IsJumping", false);
 
         // Set the current state
         switch (state)
@@ -45,6 +46,9 @@ public class AnimationController : MonoBehaviour
             case EnemyState.Attack:
                 Debug.Log("Attacking");
                 animator.SetBool("IsAttacking", true);
+                break;
+            case EnemyState.Jump:
+                animator.SetBool("IsJumping", true);
                 break;
         }
     }

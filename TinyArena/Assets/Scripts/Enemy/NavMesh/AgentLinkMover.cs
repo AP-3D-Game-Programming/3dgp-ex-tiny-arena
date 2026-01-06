@@ -15,9 +15,14 @@ public class AgentLinkMover : MonoBehaviour
 {
     public OffMeshLinkMoveMethod m_Method = OffMeshLinkMoveMethod.Parabola;
     public AnimationCurve m_Curve = new AnimationCurve();
+    private StateMachine stateMachine;
+    private Animator animator;
+
 
     IEnumerator Start()
     {
+        stateMachine = GetComponent<StateMachine>();
+        animator = GetComponent<Animator>();
         NavMeshAgent agent = GetComponent<NavMeshAgent>();
         agent.autoTraverseOffMeshLink = false;
         while (true)
@@ -64,16 +69,19 @@ public class AgentLinkMover : MonoBehaviour
 
     IEnumerator Curve(NavMeshAgent agent, float duration)
     {
+        stateMachine.ChangeState(new JumpState(), EnemyState.Jump);
         OffMeshLinkData data = agent.currentOffMeshLinkData;
         Vector3 startPos = agent.transform.position;
         Vector3 endPos = data.endPos + Vector3.up * agent.baseOffset;
         float normalizedTime = 0.0f;
-        while (normalizedTime < 1.0f)
+        while (normalizedTime <= 1.0f)
         {
             float yOffset = m_Curve.Evaluate(normalizedTime);
             agent.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * Vector3.up;
             normalizedTime += Time.deltaTime / duration;
+            animator.SetFloat("Jump", normalizedTime);
             yield return null;
         }
+        stateMachine.ChangeState(new PatrolState(), EnemyState.Patrol);
     }
 }
