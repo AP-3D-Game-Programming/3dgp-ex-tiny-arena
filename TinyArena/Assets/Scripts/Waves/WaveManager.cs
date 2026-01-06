@@ -47,7 +47,7 @@ public class WaveManager : MonoBehaviour
             if (!enemySpawner.isSpawning && waiting)
             {
                 CancelInvoke();
-                AudioManager.Instance.PlaySFX(waveChange);
+                //AudioManager.Instance.PlaySFX(waveChange);
                 StartCoroutine(Wait(timeBetweenWaves));
             }
         }
