@@ -41,9 +41,7 @@ public class WaveManager : MonoBehaviour
                 if (TileCalc() != 0)
                     InvokeRepeating(nameof(Drop), TileCalc(), TileCalc());
                 if (RotateCalc() != 0)
-                    InvokeRepeating(nameof(Rotate), RotateCalc(), RotateCalc());
-                //if (LazerCalc())
-                    
+                    InvokeRepeating(nameof(Rotate), RotateCalc(), RotateCalc());            
                 waiting = true;
             }
             if (!enemySpawner.isSpawning && waiting)
@@ -122,8 +120,6 @@ public class WaveManager : MonoBehaviour
     {
         return 3 * Mathf.Sqrt(waveNumber);
     }
-
-    private bool LazerCalc() { return waveNumber > 12; }
 
     private IEnumerator Wait(float time)
     {

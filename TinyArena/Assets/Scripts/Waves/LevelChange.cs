@@ -32,7 +32,7 @@ public class LevelChange : MonoBehaviour
         }
         droppedTiles.Add(tileIndex);
         List<Transform> tileList = Map.GetComponentsInChildren<Transform>()
-                .Where(t => t.gameObject.name == $"Ring {(tileIndex / 16)+ 1}.{tileIndex % 16}")
+                .Where(t => t.gameObject.name == $"Ring {(tileIndex / 16)+ 1}.{tileIndex % 16 + 1}")
                 .ToList();
 
         // remove tile
@@ -83,11 +83,6 @@ public class LevelChange : MonoBehaviour
         }
         droppedTiles.Remove(ringIndex);
         yield return null;
-    }
-
-    public void Lazer()
-    {
-        
     }
 
 
